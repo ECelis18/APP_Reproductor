@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Buscar - SpotiPobre</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="tema.css">
+    <title>Buscar</title>
+
+</head>
+
+<body class="bg-bg text-text font-display">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-surface border-r border-border flex flex-col shrink-0">
+            <div class="p-6 flex items-center gap-3">
+                <div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined">library_music</span>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight">SpotiPobre</h1>
+            </div>
+            <nav class="flex-1 px-4 space-y-1">
+                <div class="text-xs font-semibold text-text-muted px-3 py-2 uppercase tracking-wider">Menú</div>
+                <a id="nav-home"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                    href="inicio.html">
+                    <span class="material-symbols-outlined">home</span>
+                    Inicio
+                </a>
+                <a id="nav-buscar"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium"
+                    href="buscar.html">
+                    <span class="material-symbols-outlined">search</span>
+                    Buscar
+                </a>
+                <a id="nav-library"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                    href="biblioteca.html">
+                    <span class="material-symbols-outlined">library_music</span>
+                    Biblioteca
+                </a>
+
+                <div class="text-xs font-semibold text-text-muted px-3 py-2 mt-6 uppercase tracking-wider">Tu biblioteca
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined">album</span>
+                    Álbunes
+                </a>
+
+                <div class="text-xs font-semibold text-text-muted px-3 py-2 mt-6 uppercase tracking-wider">Cuenta</div>
+                <a id="nav-perfil"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                    href="perfil.html">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    Mi perfil
+                </a>
+                <a id="nav-logout"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                    href="login-registro.html" onclick="cerrarSesion(); return false;">
+                    <span class="material-symbols-outlined">logout</span>
+                    Cerrar sesión
+                </a>
+            </nav>
+            <div class="p-4 border-t border-border">
+                <button
+                    class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity"
+                    onclick="window.location.href='biblioteca.html'">
+                    <span class="material-symbols-outlined text-sm">add</span>
+                    Crear playlist
+                </button>
+            </div>
+        </aside>
+
+        <!--  Contenido principal -->
+        <main class="flex-1 flex flex-col min-w-0 bg-bg overflow-y-auto no-scrollbar pb-32">
+            <!-- Header -->
+            <header
+                class="sticky top-0 z-10 bg-bg/80 backdrop-blur-md px-8 py-4 flex items-center justify-between border-b border-border">
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="flex gap-2 mr-4 items-center">
+                        <button onclick="history.back()"
+                            class="flex items-center justify-center w-9 h-9 rounded-full border border-border hover:bg-surface transition-colors shrink-0">
+                            <span class="material-symbols-outlined text-base leading-none text-text">chevron_left</span>
+                        </button>
+                        <button onclick="history.forward()"
+                            class="flex items-center justify-center w-9 h-9 rounded-full border border-border hover:bg-surface transition-colors shrink-0">
+                            <span
+                                class="material-symbols-outlined text-base leading-none text-text">chevron_right</span>
+                        </button>
+                    </div>
+                    <div class="relative max-w-md w-full">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xl">search</span>
+                        <input
+                            class="w-full pl-11 pr-4 py-2.5 bg-surface border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-sm text-text placeholder-text-muted"
+                            placeholder="Buscar artistas, canciones" type="text"
+                            onkeydown="if(event.key==='Enter') window.location.href='buscar.html?q='+this.value" />
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="cambioTema()"
+                        class="flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary border border-primary/20 transition-colors shrink-0">
+                        <span class="material-symbols-outlined leading-none theme-toggle-icon">light_mode</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-surface text-text-muted transition-colors relative shrink-0">
+                        <span class="material-symbols-outlined leading-none">notifications</span>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full border-2 border-bg"></span>
+                    </button>
+                    <div class="h-8 w-[1px] bg-border mx-2"></div>
+                    <a href="perfil.html" class="flex items-center gap-3 pl-2">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-sm font-bold leading-none user-name text-text">Cargando...</p>
+                            <p class="text-xs text-text-muted mt-1 user-handle">@cargando</p>
+                        </div>
+                        <div
+                            class="user-avatar bg-center bg-cover rounded-full size-10 aspect-square shrink-0 border border-border">
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Search Tabs -->
+            <div class="px-8 border-b border-border">
+                <div class="max-w-6xl mx-auto flex gap-8">
+                    <button class="py-4 text-sm font-bold active-tab">Todos los resultados</button>
+                    <button
+                        class="py-4 text-sm font-bold text-text-muted border-b-2 border-transparent hover:text-text">Canciones</button>
+                    <button
+                        class="py-4 text-sm font-bold text-text-muted border-b-2 border-transparent hover:text-text">Artistas</button>
+                    <button
+                        class="py-4 text-sm font-bold text-text-muted border-b-2 border-transparent hover:text-text">Álbumes</button>
+                    <button
+                        class="py-4 text-sm font-bold text-text-muted border-b-2 border-transparent hover:text-text">Playlists</button>
+                </div>
+            </div>
+
+            <!-- CONTENIDO ORIGINAL DE BUSCAR -->
+            <div class="px-8 py-8 max-w-6xl mx-auto w-full">
+                <!-- Top Result & Songs -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="lg:col-span-1">
+                        <h2 class="text-xl font-bold mb-4">Top Result</h2>
+                        <div
+                            class="bg-surface border border-border p-6 rounded-2xl bg-hover:bg-surface transition-colors group relative">
+                            <div class="w-24 h-24 rounded-xl overflow-hidden mb-4 shadow-sm">
+                                <img alt="Artist" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmd2f_ltCzgnzGiIMb8XSTlXWpMwar-x-Q58OG_7QJog9d8fPr49zAIMDxU_GkwXdjd9PWUr9AuqonlyflN3eaWt60aG4zYDFqTzdTUYtzXQniQFjv2QFQOzpViPhljPgtVuQK0xVhr26ywVjfvNdpipkt-wV99legJAcbFMyk_e0te_dBzWrNItnNN-owZThWOL8jUyTJMg0iKRnuNTthcB2DKvrAHlPLQA7_LLHaHCp5lM64cIgqfaLpE3de7rhMWigsoxY" />
+                            </div>
+                            <h3 class="text-2xl font-bold">Midnight Echoes</h3>
+                            <p class="text-text-muted mt-1">Artist • Electronic</p>
+                            <span
+                                class="inline-block mt-4 px-3 py-1 bg-white border border-border rounded-full text-xs font-bold">ARTIST</span>
+                            <button
+                                class="absolute bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="material-symbols-outlined"
+                                    style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold">Songs</h2>
+                            <button class="text-sm font-bold text-text-muted hover:text-primary">Show all</button>
+                        </div>
+                        <div class="space-y-1">
+                            <!-- Song Item 1 -->
+                            <div class="flex items-center gap-4 p-2 rounded-xl hover:bg-surface group cursor-pointer">
+                                <div class="w-12 h-12 rounded-lg overflow-hidden relative">
+                                    <img alt="Song cover" class="w-full h-full object-cover"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv6eLFDrJO6e8WNOFWCRVH363mgmFRRKNGpInrSEzIM4SfEEJtFWcs-0zpDJN8tL9RMXLmwmveJ_D-L1RDok4FtrFshZod_Rz-udnrJT6EPKE-5vtcCNe8wNsIi1RIY5c3nwdHDrfxN1HIOz82wBXtbdSoFRFjgRyawpCWohKQ3T0MWkcMkqKNfy8SGR3UHLknDGnhzjRrQh0I4PJtSAiX0sE7NCQF1LWdPySxt2wh048rivre5WZj3symY2fH1RWr4Gcy7uo" />
+                                    <div
+                                        class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <span class="material-symbols-outlined text-white text-xl"
+                                            style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Neon Dreams</h4>
+                                    <p class="text-xs text-text-muted">Midnight Echoes</p>
+                                </div>
+                                <div class="hidden md:block text-xs text-text-muted">3:45</div>
+                                <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100">
+                                    <button class="p-2 hover:bg-border rounded-full text-text-muted">
+                                        <span class="material-symbols-outlined text-xl">favorite</span>
+                                    </button>
+                                    <button class="p-2 hover:bg-border rounded-full text-text-muted">
+                                        <span class="material-symbols-outlined text-xl">more_horiz</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Song Item 2 -->
+                            <div class="flex items-center gap-4 p-2 rounded-xl hover:bg-surface group cursor-pointer">
+                                <div class="w-12 h-12 rounded-lg overflow-hidden relative">
+                                    <img alt="Song cover" class="w-full h-full object-cover"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkCOpmplCbNE9Ts5ufTqsA6NduqN5wtu8SiI3AeYPOSfdEp_Z1BYu7S7AkKsNvbP92J3QlIIqxDU31wj2zzLa9S6FS97WWWtIH5Z8M8wLN-9Ra5REzqR-gd3jomAzhTdUdpw2KcBXvP7KKP2lS1rcGvuAL7uJHzmo4WDkxEy0vTtMOJVGDU7vSKM36GDKIG3exg8FJjmdl8BvP58QUSpKes0lnqROBOas3fqu67S8NZ03XwoQVXv82yFQ-V14xAJJQWJ-YWB8" />
+                                    <div
+                                        class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <span class="material-symbols-outlined text-white text-xl"
+                                            style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Silent Pulse</h4>
+                                    <p class="text-xs text-text-muted">Midnight Echoes</p>
+                                </div>
+                                <div class="hidden md:block text-xs text-text-muted">4:12</div>
+                                <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100">
+                                    <button class="p-2 hover:bg-border rounded-full text-text-muted">
+                                        <span class="material-symbols-outlined text-xl">favorite</span>
+                                    </button>
+                                    <button class="p-2 hover:bg-border rounded-full text-text-muted">
+                                        <span class="material-symbols-outlined text-xl">more_horiz</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Song Item 3 -->
+                            <div class="flex items-center gap-4 p-2 rounded-xl hover:bg-surface group cursor-pointer">
+                                <div class="w-12 h-12 rounded-lg overflow-hidden relative">
+                                    <img alt="Song cover" class="w-full h-full object-cover"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkXYLNXvv5-hx07xUGCET89QBTCYAzvGB6NAMak6fT-6BZfK-uARfxJp60dj7Tu0ZFeJoF5EdPKxE-5EqY4LYZxjh1Go28u4hdfdE-RhTIRDFmtbFjDLY8zZnZGw8x-WTY9Gp6MuF6ZqzLw2rGkRDvchCPf2erqbz0I8FqiZKRw8SY5ZV2TbporYoyaOZNbn3OD6PPygrh-uor2L0s_G_i3GR1_IHR-kKnSugje7a2Ey98eYxmxgI1Q9IiNmUJYAS4UtKpxMY" />
+                                    <div
+                                        class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <span class="material-symbols-outlined text-white text-xl"
+                                            style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Beyond the Horizon</h4>
+                                    <p class="text-xs text-text-muted">Midnight Echoes</p>
+                                </div>
+                                <div class="hidden md:block text-xs text-text-muted">5:01</div>
+                                <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100">
+                                    <button class="p-2 hover:bg-border rounded-full text-text-muted">
+                                        <span class="material-symbols-outlined text-xl">favorite</span>
+                                    </button>
+                                    <button class="p-2 hover:bg-border rounded-full text-text-muted">
+                                        <span class="material-symbols-outlined text-xl">more_horiz</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artistas fila -->
+                <div class="mb-12">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold">Artistas</h2>
+                        <button class="text-sm font-bold text-text-muted hover:text-primary">Ver todos</button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                        <!-- Artista Card 1 -->
+                        <div
+                            class="bg-surface border border-border p-4 rounded-2xl text-center group cursor-pointer hover:shadow-md transition-all">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 shadow-sm relative">
+                                <img alt="Artist" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx66kDyZIew3-6b0S2tTlMuQ1nYiF7Z_ajzra8az6o7ZkhlY6WDay2aOxrtGWrqduONnIFRdyh4Pb8sf-eXa8qQ29HUfpom_wHRRFq4kYeIv-RKVax7sVrOGuxVrnbY-ax0iTBCfvoW5hvymPmrD8U_uD0bs0eIjm4qrzS-iH-d7eAeAwsBV2dyE_Rww06O9lCvCc-Oz7HE0Iy_CMFCqhNHHcMjeE4l8X-Ae3YVGT-hvZ78UV7GmTTDhjFPuGqA4PWVtff8LY" />
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-4xl"
+                                        style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm truncate">Luna Sky</h4>
+                            <p class="text-xs text-text-muted">Pop Artist</p>
+                        </div>
+                        <!-- Artista Card 2 -->
+                        <div
+                            class="bg-surface border border-border p-4 rounded-2xl text-center group cursor-pointer hover:shadow-md transition-all">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 shadow-sm relative">
+                                <img alt="Artist" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuARZKiSVmdRNdHvturD7XZDmmuk5E1sqjKKgT4XOd4eUcfhGEs67Fbc9edfwL7YfrQdDYnWypa-x9W_nuqKgwFheBSEtnIv8W38cmSMQDJJJ6d8SgnyE641MM2pIne9EbhaO5ghOyXjxTPPbMwrLtiIBlE7PL2hZn9jzTGcTiItvYAMhJqdNkwPr8N3bE5-nkfw9GUHhT1lXJIrDYaAre3Tub9SKqAhGJDFPMxJzFcKJ1t0urN06AQTdhRx84EEuUIIhyTOPNc" />
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-4xl"
+                                        style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm truncate">Electro Vortex</h4>
+                            <p class="text-xs text-text-muted">Producer</p>
+                        </div>
+                        <!-- Artista Card 3 -->
+                        <div
+                            class="bg-surface border border-border p-4 rounded-2xl text-center group cursor-pointer hover:shadow-md transition-all">
+                            <div class="w-full aspect-square rounded-full overflow-hidden mb-4 shadow-sm relative">
+                                <img alt="Artist" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxr7DeQLvreNkQXR0hgvEMFmQ54zQMVPoiXd4lbajmqf35VVrqMrZYy8zYA8zoeaf23USK6aGscYJrUv_fDV80sRclU-RW9e-M87ZYRsazQuo5fXqtARFc6QBbNXOa-mO9QW85GMM0z4pmbU5y6xHUD_oS4oyJqfuk4rw6LWrBd1VAYqsTwfnqgGJq8v2HuOPsJmtVx1O8ViZEKmf-6rKLgzwi4UIwnmWRT03b1R5psMyqxzJ9f6XVbTr1jeBH1iN441dHjgI" />
+                                <div
+                                    class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-white text-4xl"
+                                        style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm truncate">Urban Beats</h4>
+                            <p class="text-xs text-text-muted">Hip Hop Group</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Albums Row -->
+                <div class="mb-12">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold">Albums</h2>
+                        <button class="text-sm font-bold text-text-muted hover:text-primary">View all</button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                        <!-- Album Card 1 -->
+                        <div
+                            class="bg-surface border border-border p-4 rounded-2xl group cursor-pointer hover:shadow-md transition-all">
+                            <div class="w-full aspect-square rounded-xl overflow-hidden mb-4 shadow-sm relative">
+                                <img alt="Album cover" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuChA8_lgVXHpXAS8U1sDxn5VTq73p96f3nILFfnr62OzrK_12uts1Adk1ZIFNihWEMZuF9kSRzSSHBcl6vdGgsDuKg0_Dwuo1cHtMpixcxCyNSIzSJFLXYfpFwcdYI_2_07bRtk4ytm2519C18b7XyxY7e9LkpA_mJ1XBOiQvawcr-IlYomPWE7ANqO11YACQehHtVdhRkOvCwZkYH6qO4vSrETixwMdR33G2D2J1BCxGJPtFmFDuA6nMkKwTu6fRuC2niNwyU" />
+                                <div
+                                    class="absolute bottom-2 right-2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all">
+                                    <span class="material-symbols-outlined text-xl"
+                                        style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm truncate">City Lights</h4>
+                            <p class="text-xs text-text-muted">Midnight Echoes • 2023</p>
+                        </div>
+                        <!-- Album Card 2 -->
+                        <div
+                            class="bg-surface border border-border p-4 rounded-2xl group cursor-pointer hover:shadow-md transition-all">
+                            <div class="w-full aspect-square rounded-xl overflow-hidden mb-4 shadow-sm relative">
+                                <img alt="Album cover" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeySk7oBMSbs1vsFUcU0vhoKGN__bJcmdn1ESEVxZ1FWl2WWE5MXg9LaGRqpEVJMwUByi2YFmNCMlLjA03RjgNt5QLMnSS9wrfd5mEQv3R-F3g1CW1wk9JmoDckyibOXBvWT0KlNpju6YRu2dQrg090NUvZdId6I1hh4fVPOQ3tB1Mw2p8kFpurnq8UE7c2od2oZAzQcl_7Q_xjxXLIqbUEx2BAx6Fn8u2VvKy7EfKo-GCQZ2EuMpjqR2uMGpwB8kHJQRrhmY" />
+                                <div
+                                    class="absolute bottom-2 right-2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all">
+                                    <span class="material-symbols-outlined text-xl"
+                                        style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm truncate">Deep Woods</h4>
+                            <p class="text-xs text-text-muted">Midnight Echoes • 2021</p>
+                        </div>
+                        <!-- Album Card 3 -->
+                        <div
+                            class="bg-surface border border-border p-4 rounded-2xl group cursor-pointer hover:shadow-md transition-all">
+                            <div class="w-full aspect-square rounded-xl overflow-hidden mb-4 shadow-sm relative">
+                                <img alt="Album cover" class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFycqrgIECZEBDcyAPCL2cZp9HVMJWS88iSJFZ7xk9s2Sjl0SfjpagkVZ29yPGVYwfazlQPQp_wagCjIVV0ZqCpwgEg0qMYzcwF0QuITZbpitZ5glmkXOhf6Rz9UibhyArRilJPnj_OlhdMK1dNaeIKL9jH8PWR98Tx7rfCbyB1Ur_kZkLJ5TegIrAomrjwTjK1qKi7Ureau1dBfyBniqptDeZbHn9cnJLDUHTZZN4qRp13Jd4U7xa3I0A6LD5Hd1PMlD_WTs" />
+                                <div
+                                    class="absolute bottom-2 right-2 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all">
+                                    <span class="material-symbols-outlined text-xl"
+                                        style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                                </div>
+                            </div>
+                            <h4 class="font-bold text-sm truncate">Static Flows</h4>
+                            <p class="text-xs text-text-muted">Midnight Echoes • 2020</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Barra del reproductor -->
+    <footer class="fixed bottom-0 left-0 right-0 h-24 bg-surface border-t border-border flex items-center px-6 z-20">
+        <div class="flex items-center gap-4 w-1/4">
+            <img alt="Current" class="size-14 rounded-lg shadow-md"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGH2LtKdcL5zuxJcDotbPmDQ6fhRl3CVhRMaKMQ2cOo4jcmvvClNhEDYo0foDOWmsv_-5MHUlXheQX22l91PuJrV6Xdf129dBnnrjOqm-LMIbLlLcIl1MFyhB-QQVmP0rvKirjqzZZAPQxKr--sBHP3hH44wcbHg8FF86EriG7rXVc-RyKyLc_GFqWR3CJSts2hZL1XX5VYCjNXVcka8YRtgFsb7MFVDKrDY6V6eyYJFwe3RQPKnoaFN5OEDPdQtGTDoxwKgY" />
+            <div class="overflow-hidden">
+                <p class="text-sm font-bold truncate">Electric Pulse</p>
+                <p class="text-xs text-text-muted truncate">The Synths</p>
+            </div>
+            <div class="flex gap-2 ml-2">
+                <button class="text-primary"><span class="material-symbols-outlined text-lg"
+                        style="font-variation-settings: 'FILL' 1">favorite</span></button>
+            </div>
+        </div>
+        <div class="flex-1 flex flex-col items-center max-w-2xl px-8">
+            <div class="flex items-center gap-6 mb-2">
+                <button class="text-text hover:text-primary transition-colors"><span
+                        class="material-symbols-outlined text-3xl">skip_previous</span></button>
+                <button
+                    class="size-11 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">pause</span>
+                </button>
+                <button class="text-text hover:text-primary transition-colors"><span
+                        class="material-symbols-outlined text-3xl">skip_next</span></button>
+            </div>
+            <div class="w-full flex items-center gap-3">
+                <span class="text-[10px] font-bold text-text-muted w-8 text-right">2:15</span>
+                <div class="flex-1 h-1 bg-border rounded-full relative group cursor-pointer">
+                    <div class="absolute top-0 left-0 h-full w-[60%] bg-primary rounded-full"></div>
+                    <div
+                        class="absolute top-1/2 left-[60%] -translate-y-1/2 size-3 bg-primary border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    </div>
+                </div>
+                <span class="text-[10px] font-bold text-text-muted w-8">4:12</span>
+            </div>
+        </div>
+        <div class="w-1/4 flex items-center justify-end gap-4">
+            <button class="text-text-muted hover:text-primary transition-colors"><span
+                    class="material-symbols-outlined">queue_music</span></button>
+            <div class="flex items-center gap-2 w-32">
+                <span class="material-symbols-outlined text-text-muted text-xl">volume_up</span>
+                <div class="flex-1 h-1 bg-border rounded-full relative">
+                    <div class="absolute top-0 left-0 h-full w-[70%] bg-primary rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Cargar el tema y la configuración de Tailwind -->
+    <script src="js/tailwind-config.js"></script>
+    <!-- Para manejar el cambio de tema -->
+    <script src="js/tema.js"></script>
+</body>
+
+</html>

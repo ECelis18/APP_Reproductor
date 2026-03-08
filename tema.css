@@ -1,0 +1,219 @@
+/* Variables de color en modo claro */
+:root {
+    --color-bg: #FFFFFF;
+    --color-surface: #F0F0F0;
+    --color-border: #E0E0E0;
+    --color-text: #111111;
+    --color-muted: #666666;
+    --color-primary: #7f0df2;
+}
+
+/* Variables en modo oscuro */
+.dark {
+    --color-bg: #191022;
+    --color-surface: #2a1f3d;
+    --color-border: #3d2f5a;
+    --color-text: #f0f0f0;
+    --color-muted: #a09ab5;
+    --color-primary: #9b3ff5;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.active-tab {
+    border-bottom: 2px solid #7f0df2;
+    color: #111111;
+}
+
+.dark .active-tab {
+    color: #f0f0f0;
+}
+
+
+/* Aplicar variables a las clases de Tailwind */
+.bg-bg {
+    background-color: var(--color-bg) !important;
+}
+
+.bg-surface {
+    background-color: var(--color-surface) !important;
+}
+
+.hover\:bg-surface:hover {
+    background-color: var(--color-surface) !important;
+}
+
+.border-border {
+    border-color: var(--color-border) !important;
+}
+
+.hover\:border-border:hover {
+    border-color: var(--color-border) !important;
+}
+
+.text-text {
+    color: var(--color-text) !important;
+}
+
+.text-text-muted {
+    color: var(--color-muted) !important;
+}
+
+.hover\:text-text:hover {
+    color: var(--color-text) !important;
+}
+
+.hover\:text-text-muted:hover {
+    color: var(--color-muted) !important;
+}
+
+.text-primary {
+    color: var(--color-primary) !important;
+}
+
+.hover\:text-primary:hover {
+    color: var(--color-primary) !important;
+}
+
+.bg-primary {
+    background-color: var(--color-primary) !important;
+}
+
+.hover\:bg-primary:hover {
+    background-color: var(--color-primary) !important;
+}
+
+.border-primary {
+    border-color: var(--color-primary) !important;
+}
+
+.hover\:border-primary:hover {
+    border-color: var(--color-primary) !important;
+}
+
+/* Clases específicas para hover states */
+.hover\:bg-black\/5:hover {
+    background-color: var(--color-surface) !important;
+}
+
+.bg-primary\/10 {
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+}
+
+.hover\:bg-primary\/10:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+}
+
+.bg-primary\/20 {
+    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
+}
+
+.bg-primary\/5 {
+    background-color: color-mix(in srgb, var(--color-primary) 5%, transparent) !important;
+}
+
+.border-primary\/10 {
+    border-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+}
+
+.border-primary\/20 {
+    border-color: color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
+}
+
+/* Para elementos con opacidad */
+.bg-black\/40 {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.bg-black\/20 {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.bg-black\/0 {
+    background-color: transparent !important;
+}
+
+.group:hover .group-hover\:bg-black\/20 {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Transición suave al cambiar tema */
+*,
+*::before,
+*::after {
+    transition: background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+/* Scrollbar oculta */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Estilos para el header */
+.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.bg-bg\/80 {
+    background-color: var(--color-bg) !important;
+    opacity: 0.8;
+}
+
+.backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Para inputs */
+.bg-surface {
+    background-color: var(--color-surface) !important;
+}
+
+.placeholder-text-muted::placeholder {
+    color: var(--color-muted) !important;
+    opacity: 0.7;
+}
+
+/* Para bordes en hover */
+.hover\:bg-border:hover {
+    background-color: var(--color-border) !important;
+}
+
+/* Para fondos semitransparentes en modo oscuro */
+.dark .bg-white {
+    background-color: var(--color-surface) !important;
+}
+
+.dark .bg-white\/80 {
+    background-color: var(--color-bg) !important;
+    opacity: 0.8;
+}
+
+.dark .bg-white\/20 {
+    background-color: rgba(42, 31, 61, 0.2) !important;
+}
