@@ -1,4 +1,6 @@
-/* Variables de color en modo claro */
+/* ============================================
+   VARIABLES DE COLOR
+   ============================================ */
 :root {
     --color-bg: #FFFFFF;
     --color-surface: #F0F0F0;
@@ -8,7 +10,6 @@
     --color-primary: #7f0df2;
 }
 
-/* Variables en modo oscuro */
 .dark {
     --color-bg: #191022;
     --color-surface: #2a1f3d;
@@ -18,6 +19,9 @@
     --color-primary: #9b3ff5;
 }
 
+/* ============================================
+   ESTILOS BASE
+   ============================================ */
 body {
     font-family: 'Inter', sans-serif;
 }
@@ -31,17 +35,22 @@ body {
     scrollbar-width: none;
 }
 
-.active-tab {
-    border-bottom: 2px solid #7f0df2;
-    color: #111111;
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-.dark .active-tab {
-    color: #f0f0f0;
+/* Transiciones suaves */
+*,
+*::before,
+*::after {
+    transition: background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
 }
 
-
-/* Aplicar variables a las clases de Tailwind */
+/* ============================================
+   UTILIDADES (Variables aplicadas)
+   ============================================ */
 .bg-bg {
     background-color: var(--color-bg) !important;
 }
@@ -50,15 +59,7 @@ body {
     background-color: var(--color-surface) !important;
 }
 
-.hover\:bg-surface:hover {
-    background-color: var(--color-surface) !important;
-}
-
 .border-border {
-    border-color: var(--color-border) !important;
-}
-
-.hover\:border-border:hover {
     border-color: var(--color-border) !important;
 }
 
@@ -70,19 +71,7 @@ body {
     color: var(--color-muted) !important;
 }
 
-.hover\:text-text:hover {
-    color: var(--color-text) !important;
-}
-
-.hover\:text-text-muted:hover {
-    color: var(--color-muted) !important;
-}
-
 .text-primary {
-    color: var(--color-primary) !important;
-}
-
-.hover\:text-primary:hover {
     color: var(--color-primary) !important;
 }
 
@@ -90,28 +79,173 @@ body {
     background-color: var(--color-primary) !important;
 }
 
-.hover\:bg-primary:hover {
-    background-color: var(--color-primary) !important;
-}
-
 .border-primary {
     border-color: var(--color-primary) !important;
+}
+
+/* ============================================
+   HOVERS MEJORADOS - UNIFICADOS
+   ============================================ */
+:root .hover\:bg-surface:hover {
+    background-color: #e0e0e0 !important;
+}
+
+.dark .hover\:bg-surface:hover {
+    background-color: #3f315d !important;
+}
+
+:root .hover\:bg-border:hover {
+    background-color: #d0d0d0 !important;
+}
+
+.dark .hover\:bg-border:hover {
+    background-color: #4d3d6b !important;
+}
+
+:root .hover\:bg-black\/5:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark .hover\:bg-black\/5:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.hover\:bg-primary\/10:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
+}
+
+.hover\:text-primary:hover {
+    color: var(--color-primary) !important;
 }
 
 .hover\:border-primary:hover {
     border-color: var(--color-primary) !important;
 }
 
-/* Clases específicas para hover states */
-.hover\:bg-black\/5:hover {
+/* Hover para filas de canciones */
+.song-row-hover:hover {
+    background-color: #e8e8e8 !important;
+    transform: translateX(4px);
+    transition: all 0.2s ease;
+}
+
+.dark .song-row-hover:hover {
+    background-color: #352a4a !important;
+}
+
+/* Hover para tarjetas */
+.hover-card-enhanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+/* ============================================
+   SCROLLBAR PREMIUM - VERSIÓN ÚNICA
+   ============================================ */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-surface);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom,
+            var(--color-primary) 0%,
+            color-mix(in srgb, var(--color-primary) 70%, white) 100%);
+    border-radius: 10px;
+    border: 2px solid var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom,
+            color-mix(in srgb, var(--color-primary) 90%, black) 0%,
+            var(--color-primary) 100%);
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-surface);
+}
+
+/* Scrollbar para modales (más delgado) */
+.modal-scrollbar::-webkit-scrollbar,
+.premium-scrollbar.modal-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Clase premium unificada */
+.premium-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-surface);
+}
+
+.premium-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.premium-scrollbar.modal-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* ============================================
+   MODALES
+   ============================================ */
+.dark .bg-bg,
+.dark .bg-surface,
+.dark .bg-white {
     background-color: var(--color-surface) !important;
 }
 
-.bg-primary\/10 {
-    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+.dark .text-text,
+.dark .font-bold,
+.dark label {
+    color: var(--color-text) !important;
 }
 
-.hover\:bg-primary\/10:hover {
+/* ============================================
+   INPUTS Y FORMULARIOS
+   ============================================ */
+.input-sp {
+    width: 100%;
+    padding: .625rem .875rem;
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: .75rem;
+    font-size: .8125rem;
+    color: var(--color-text);
+    outline: none;
+}
+
+.input-sp:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+.dark .input-sp,
+.dark input,
+.dark select,
+.dark textarea {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text) !important;
+}
+
+.dark .input-sp::placeholder,
+.dark input::placeholder {
+    color: var(--color-muted) !important;
+    opacity: 0.7;
+}
+
+/* ============================================
+   OPACIDADES
+   ============================================ */
+.bg-primary\/10 {
     background-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
 }
 
@@ -123,15 +257,6 @@ body {
     background-color: color-mix(in srgb, var(--color-primary) 5%, transparent) !important;
 }
 
-.border-primary\/10 {
-    border-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
-}
-
-.border-primary\/20 {
-    border-color: color-mix(in srgb, var(--color-primary) 20%, transparent) !important;
-}
-
-/* Para elementos con opacidad */
 .bg-black\/40 {
     background-color: rgba(0, 0, 0, 0.4) !important;
 }
@@ -148,31 +273,9 @@ body {
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Transición suave al cambiar tema */
-*,
-*::before,
-*::after {
-    transition: background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
-}
-
-/* Scrollbar oculta */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-/* Material Symbols */
-.material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-
-/* Estilos para el header */
+/* ============================================
+   HEADER
+   ============================================ */
 .sticky {
     position: sticky;
     top: 0;
@@ -189,129 +292,14 @@ body {
     -webkit-backdrop-filter: blur(12px);
 }
 
-/* Para inputs */
-.bg-surface {
-    background-color: var(--color-surface) !important;
+/* ============================================
+   ACTIVE TAB
+   ============================================ */
+.active-tab {
+    border-bottom: 2px solid #7f0df2;
+    color: #111111;
 }
 
-.placeholder-text-muted::placeholder {
-    color: var(--color-muted) !important;
-    opacity: 0.7;
-}
-
-/* Para bordes en hover */
-.hover\:bg-border:hover {
-    background-color: var(--color-border) !important;
-}
-
-/* Para fondos semitransparentes en modo oscuro */
-.dark .bg-white {
-    background-color: var(--color-surface) !important;
-}
-
-.dark .bg-white\/80 {
-    background-color: var(--color-bg) !important;
-    opacity: 0.8;
-}
-
-.dark .bg-white\/20 {
-    background-color: rgba(42, 31, 61, 0.2) !important;
-}
-
-/* Inputs en modo oscuro */
-.dark .input-sp,
-.dark input,
-.dark select,
-.dark textarea {
-    background-color: var(--color-surface) !important;
-    border-color: var(--color-border) !important;
-    color: var(--color-text) !important;
-}
-
-.dark .input-sp:focus,
-.dark input:focus,
-.dark select:focus,
-.dark textarea:focus {
-    border-color: var(--color-primary) !important;
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent) !important;
-}
-
-/* Placeholders en modo oscuro */
-.dark .input-sp::placeholder,
-.dark input::placeholder,
-.dark select::placeholder,
-.dark textarea::placeholder {
-    color: var(--color-muted) !important;
-    opacity: 0.7;
-}
-
-/* Estilos específicos para los selects */
-.dark select option {
-    background-color: var(--color-surface);
-    color: var(--color-text);
-}
-
-/* Para los modales específicamente */
-.dark .bg-bg,
-.dark .bg-surface,
-.dark .bg-white {
-    background-color: var(--color-surface) !important;
-}
-
-/* Para los textos dentro de modales */
-.dark .text-text,
-.dark .font-bold,
-.dark .font-semibold,
-.dark .font-medium,
-.dark label {
-    color: var(--color-text) !important;
-}
-
-/* Para los textos secundarios */
-.dark .text-text-muted {
-    color: var(--color-muted) !important;
-}
-
-/* Para los bordes de los inputs */
-.dark .border-border {
-    border-color: var(--color-border) !important;
-}
-
-/* Para los iconos dentro de inputs */
-.dark .material-symbols-outlined {
-    color: var(--color-muted);
-}
-
-/* Estilo específico para los inputs del modal admin */
-.dark #modal-admin input,
-.dark #modal-admin select,
-.dark #modal-admin textarea {
-    background-color: var(--color-surface) !important;
-    border-color: var(--color-border) !important;
-    color: var(--color-text) !important;
-}
-
-/* Para los labels del modal admin */
-.dark #modal-admin .label-sp {
-    color: var(--color-muted) !important;
-}
-
-/* Para el fondo del modal */
-.dark #modal-admin .bg-bg,
-.dark #modal-admin .bg-surface {
-    background-color: var(--color-bg) !important;
-}
-
-/* Para los textos del título del modal */
-.dark #modal-admin .font-black,
-.dark #modal-admin .font-bold {
-    color: var(--color-text) !important;
-}
-
-/* Para los placeholders en el modal */
-.dark #modal-admin input::placeholder,
-.dark #modal-admin select::placeholder,
-.dark #modal-admin textarea::placeholder {
-    color: var(--color-muted) !important;
-    opacity: 0.5;
+.dark .active-tab {
+    color: #f0f0f0;
 }

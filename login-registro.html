@@ -13,14 +13,12 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="tema.css">
-
-
-    <title>Login</title>
+    <title>Login - SpotiPobre</title>
 </head>
 
 <body class="bg-bg dark:bg-bg-dark font-display text-text transition-colors duration-200">
     <div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4">
-        <!-- HEADER PARA LOGIN-REGISTRO -->
+        <!-- Header -->
         <header
             class="fixed top-0 left-0 w-full flex items-center justify-between px-6 md:px-10 py-4 bg-bg/80 backdrop-blur-md border-b border-border z-50">
             <div class="flex items-center gap-2 text-primary">
@@ -36,69 +34,76 @@
                 </button>
             </div>
         </header>
+
         <!-- Main Login Card Container -->
         <main class="w-full max-w-[480px] mt-16">
             <div class="bg-white rounded-xl shadow-xl border border-border overflow-hidden">
                 <!-- Visual Header -->
-                <div class="w-full h-48 bg-cover bg-center" data-alt="Abstract purple and white flowing shapes"
+                <div class="w-full h-48 bg-cover bg-center"
                     style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgOJsecvJRLh8L_Wk5iCNiwJZE9BJZUejdIhyfItjW9v8Cr_K_U8Ib-N8Ig41_lQvosTml--UnefBZGzhhyC03qI57Af2qsdk9dN2LXpJRzFpdTHi3HJYuZa1wrIZOZsfVvTUdznmOeSMKwcyamJx5eBnPbuFyksCJSJXRd6quWKG1hJRokcz8YG1EMCLL9vcLEVvG1hAnodVcQxr5tYfGrSfcOJNahFrcskd0HOO9Sdte7HXAcbhnbMH28qK5MP9iAwvWGBY')">
                 </div>
-                <div class="p-8">
-                    <!-- Title & Description -->
-                    <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-text mb-2">Bienvenido</h1>
-                        <p class="text-text-muted text-sm leading-relaxed">Porfavor ingrese sus credenciales para
-                            acceder a su cuenta y continuar su viaje.</p>
-                    </div>
-                    <!-- Login Form -->
-                    <form class="space-y-5" id="loginForm" onsubmit="event.preventDefault();">
-                        <div class="space-y-2">
-                            <label class="text-text text-sm font-semibold block px-1">Correo Electrónico</label>
-                            <div class="relative">
-                                <span
-                                    class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">mail</span>
-                                <input
-                                    class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl text-text placeholder:text-text-muted/60 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
-                                    id="loginEmail" placeholder="name@gmail.com" type="email" />
-                            </div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between px-1">
-                                <label class="text-text text-sm font-semibold">Contraseña</label>
-                                <a class="text-primary text-xs font-semibold hover:underline" href="#">¿Has olvidado tu
-                                    contraseña?</a>
-                            </div>
-                            <div class="relative">
-                                <span
-                                    class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">lock</span>
-                                <input
-                                    class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl text-text placeholder:text-text-muted/60 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
-                                    id="loginPassword" placeholder="••••••••" type="password" />
-                            </div>
-                        </div>
-                        <button
-                            class="w-full py-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/20"
-                            type="submit">
-                            Iniciar Sesión
-                        </button>
-                    </form>
-                    <!-- Divider -->
-                    <div class="relative my-8">
-                        <div class="absolute inset-0 flex items-center">
-                            <span class="w-full border-t border-border"></span>
-                        </div>
-                        <div class="relative flex justify-center text-xs uppercase">
-                            <span class="bg-white px-3 text-text-muted font-medium tracking-wider">SpotiPobre</span>
-                        </div>
-                    </div>
-                    <!-- Footer Link -->
-                    <p class="text-center mt-8 text-sm text-text-muted">
-                        ¿No tienes una cuenta?
-                        <a class="text-primary font-bold hover:underline" href="#" id="showRegisterLink">Crear una
-                            cuenta</a>
-                    </p>
 
-                    <!-- Agregar formulario de registro (oculto inicialmente) -->
+                <div class="p-8">
+                    <!-- LOGIN SECTION (visible por defecto) -->
+                    <div id="loginSection">
+                        <div class="mb-8">
+                            <h1 class="text-3xl font-bold text-text mb-2">Bienvenido</h1>
+                            <p class="text-text-muted text-sm leading-relaxed">Ingresa tus credenciales para acceder a
+                                tu cuenta</p>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form class="space-y-5" id="loginForm" onsubmit="event.preventDefault();">
+                            <div class="space-y-2">
+                                <label class="text-text text-sm font-semibold block px-1">Correo Electrónico</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">mail</span>
+                                    <input
+                                        class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl text-text placeholder:text-text-muted/60 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                                        id="loginEmail" placeholder="nombre@email.com" type="email" />
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between px-1">
+                                    <label class="text-text text-sm font-semibold">Contraseña</label>
+                                    <a class="text-primary text-xs font-semibold hover:underline" href="#">¿Olvidaste tu
+                                        contraseña?</a>
+                                </div>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">lock</span>
+                                    <input
+                                        class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl text-text placeholder:text-text-muted/60 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                                        id="loginPassword" placeholder="••••••••" type="password" />
+                                </div>
+                            </div>
+                            <button
+                                class="w-full py-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/20"
+                                type="submit">
+                                Iniciar Sesión
+                            </button>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="relative my-8">
+                            <div class="absolute inset-0 flex items-center">
+                                <span class="w-full border-t border-border"></span>
+                            </div>
+                            <div class="relative flex justify-center text-xs uppercase">
+                                <span class="bg-white px-3 text-text-muted font-medium tracking-wider">SpotiPobre</span>
+                            </div>
+                        </div>
+
+                        <!-- Footer Link -->
+                        <p class="text-center mt-8 text-sm text-text-muted">
+                            ¿No tienes una cuenta?
+                            <a class="text-primary font-bold hover:underline cursor-pointer" href="#"
+                                id="showRegisterLink">Crear una cuenta</a>
+                        </p>
+                    </div>
+
+                    <!-- REGISTER SECTION (oculto inicialmente) -->
                     <div id="registerForm" style="display: none;">
                         <h2 class="text-3xl font-bold text-text mb-2">Crear cuenta</h2>
                         <p class="text-text-muted text-sm leading-relaxed mb-8">Únete a nuestra comunidad musical</p>
@@ -121,7 +126,7 @@
                                         class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">badge</span>
                                     <input id="registerUsername"
                                         class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl"
-                                        placeholder="nombre de usuario" type="text" />
+                                        placeholder="usuario" type="text" />
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -131,7 +136,7 @@
                                         class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">mail</span>
                                     <input id="registerEmail"
                                         class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl"
-                                        placeholder="name@gmail.com" type="email" />
+                                        placeholder="email@ejemplo.com" type="email" />
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -151,7 +156,7 @@
                                         class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-xl">image</span>
                                     <input id="registerAvatar"
                                         class="w-full pl-12 pr-4 py-3.5 bg-white border border-border rounded-xl"
-                                        placeholder="https://example.com/avatar.jpg" type="url" />
+                                        placeholder="https://..." type="url" />
                                 </div>
                             </div>
                             <button type="submit"
@@ -162,13 +167,13 @@
 
                         <p class="text-center mt-8 text-sm text-text-muted">
                             ¿Ya tienes una cuenta?
-                            <a class="text-primary font-bold hover:underline" href="#" id="showLoginLink">Iniciar
-                                sesión</a>
+                            <a class="text-primary font-bold hover:underline cursor-pointer" href="#"
+                                id="showLoginLink">Iniciar sesión</a>
                         </p>
                     </div>
-                    </p>
                 </div>
             </div>
+
             <!-- Policy Links -->
             <div class="mt-8 flex justify-center gap-6 text-xs text-text-muted font-medium">
                 <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
@@ -178,9 +183,14 @@
         </main>
     </div>
 
+    <!-- Toast -->
+    <div id="sp-toast"></div>
+
+    <!-- Scripts -->
     <script src="js/tailwind-config.js"></script>
-    <script src="js/bd.js"></script>
+    <script src="js/db.js"></script>
     <script src="js/tema.js"></script>
+    <script src="js/notificacion.js"></script>
     <script src="js/auth.js"></script>
 </body>
 

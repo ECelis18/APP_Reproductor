@@ -151,11 +151,6 @@
             class="flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary border border-primary/20 transition-colors shrink-0">
             <span class="material-symbols-outlined leading-none theme-toggle-icon">light_mode</span>
           </button>
-          <button
-            class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-surface text-text-muted transition-colors relative shrink-0">
-            <span class="material-symbols-outlined leading-none">notifications</span>
-            <span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full border-2 border-bg"></span>
-          </button>
           <div class="h-8 w-[1px] bg-border mx-2"></div>
           <a href="perfil.html" class="flex items-center gap-3 pl-2">
             <div class="text-right hidden sm:block">
@@ -246,6 +241,14 @@
             <a href="biblioteca.html" class="text-primary text-sm font-bold hover:underline">Ver todas →</a>
           </div>
           <div id="perfil-playlists" class="flex flex-col gap-1"></div>
+        </div>
+        <!-- Canciones con like -->
+        <div class="px-6 md:px-10 pb-8">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-text text-xl font-bold leading-tight tracking-tight">Tus Favoritos</h2>
+            <a href="biblioteca.html?tab=liked" class="text-primary text-sm font-bold hover:underline">Ver todos →</a>
+          </div>
+          <div id="perfil-likes" class="flex flex-col gap-1"></div>
         </div>
       </main>
     </div>
@@ -579,7 +582,8 @@
             <span class="material-symbols-outlined text-sm">add</span>Agregar canción
           </button>
         </div>
-        <div id="album-canciones-lista" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
+        <div id="album-canciones-lista" class="space-y-2 premium-scrollbar pr-2"
+          style="max-height: 60vh; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
@@ -671,7 +675,8 @@
             <span class="material-symbols-outlined text-sm">add</span>Agregar canción
           </button>
         </div>
-        <div id="playlist-canciones-lista" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
+        <div id="playlist-canciones-lista" class="space-y-2 premium-scrollbar pr-2"
+          style="max-height: 60vh; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
@@ -711,7 +716,7 @@
   <div id="sp-toast"></div>
 
   <script src="js/tailwind-config.js"></script>
-  <script src="js/bd.js"></script>
+  <script src="js/db.js"></script>
   <script src="js/tema.js"></script>
   <script src="js/perfil.js"></script>
 </body>

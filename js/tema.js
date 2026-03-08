@@ -12,7 +12,7 @@ function cambioTema() {
 }
 
 function cerrarSesion() {
-    if (typeof DB !== 'undefined') DB.cerrarSesion();
+    if (typeof db !== 'undefined') db.cerrarSesion();
     else localStorage.removeItem('sp_usuario_actual');
     location.href = 'login-registro.html';
     return false;

@@ -29,12 +29,12 @@ function buscar(q) {
 
     estadoInicial.classList.add('hidden');
 
-    const todasCanciones = DB.getCanciones().filter(c =>
+    const todasCanciones = db.getCanciones().filter(c =>
         c.titulo?.toLowerCase().includes(q) ||
         c.artista?.toLowerCase().includes(q) ||
         c.genero?.toLowerCase().includes(q)
     );
-    const todosAlbums = DB.getAlbums().filter(a =>
+    const todosAlbums = db.getAlbums().filter(a =>
         a.titulo?.toLowerCase().includes(q) ||
         a.artista?.toLowerCase().includes(q) ||
         a.genero?.toLowerCase().includes(q)
@@ -52,7 +52,7 @@ function buscar(q) {
     sinRes.classList.add('hidden');
     resultados.classList.remove('hidden');
 
-    const u = DB.getUsuarioActual();
+    const u = db.getUsuarioActual();
     const colaIds = canciones.map(c => c.id);
 
     const resCan = document.getElementById('res-canciones');
@@ -60,7 +60,7 @@ function buscar(q) {
     if (canciones.length) {
         resCanWrap.classList.remove('hidden');
         resCan.innerHTML = canciones.map(c => {
-            const liked = u ? DB.tienelike(u.id, c.id) : false;
+            const liked = u ? db.tienelike(u.id, c.id) : false;
             return `
     <div class="flex items-center gap-4 p-2 rounded-xl hover:bg-surface group cursor-pointer"
         onclick="reproducirDesdeResultado('${c.id}',${JSON.stringify(colaIds)})">
@@ -112,27 +112,41 @@ function buscar(q) {
 }
 
 function reproducirDesdeResultado(id, colaIds) {
-    // Guardar en sessionStorage para player bar
-    const c = DB.getCanciones().find(x => x.id === id);
+    const c = db.getCanciones().find(x => x.id === id);
     if (!c) return;
+
     sessionStorage.setItem('sp_now', JSON.stringify(c));
     const setText = (elId, v) => { const e = document.getElementById(elId); if (e) e.textContent = v; };
     setText('player-title', c.titulo || '—');
     setText('player-artist', c.artista || '—');
     setText('player-duration', c.duracion || '—');
+
     const cw = document.getElementById('player-cover-wrap');
-    if (cw) cw.innerHTML = c.portada
-        ? `<img src="${c.portada}" class="w-full h-full object-cover rounded-lg">`
-        : '<span class="material-symbols-outlined text-text-muted">music_note</span>';
-    // Abrir YT si es necesario — navegar a inicio para el player completo
-    // Para no interrumpir la búsqueda, abrimos en una mini ventana emergente
-    // (o simplemente actualizamos el player bar y dejamos el YT en inicio)
+    if (cw) {
+        cw.innerHTML = c.portada
+            ? `<img src="${c.portada}" class="w-full h-full object-cover rounded-lg">`
+            : '<span class="material-symbols-outlined text-text-muted">music_note</span>';
+    }
+
+    // Actualizar like en player bar
+    const u = db.getUsuarioActual();
+    if (u) {
+        const liked = db.tienelike(u.id, id);
+        const likeIcon = document.getElementById('player-like-icon');
+        if (likeIcon) {
+            likeIcon.textContent = liked ? 'favorite' : 'favorite_border';
+            likeIcon.style.color = liked ? 'var(--color-primary)' : '';
+            likeIcon.style.fontVariationSettings = liked ? "'FILL' 1" : "'FILL' 0";
+        }
+    }
+
+    toast('Reproduciendo: ' + c.titulo);
 }
 
 function toggleLikeBuscar(id, btn) {
-    const u = DB.getUsuarioActual();
+    const u = db.getUsuarioActual();
     if (!u) return;
-    const liked = DB.toggleLike(u.id, id);
+    const liked = db.toggleLike(u.id, id);
     const icon = btn.querySelector('.material-symbols-outlined');
     if (!icon) return;
     icon.textContent = liked ? 'favorite' : 'favorite_border';
@@ -141,7 +155,7 @@ function toggleLikeBuscar(id, btn) {
 }
 
 function renderGeneros() {
-    const canciones = DB.getCanciones();
+    const canciones = db.getCanciones();
     const generos = [...new Set(canciones.map(c => c.genero).filter(Boolean))];
     const el = document.getElementById('generos-grid');
     if (!el) return;
@@ -160,7 +174,7 @@ function renderGeneros() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const u = DB.getUsuarioActual();
+    const u = db.getUsuarioActual();
     if (!u) { location.href = 'login-registro.html'; return; }
     renderGeneros();
     // Leer query de URL

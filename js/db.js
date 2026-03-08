@@ -1,4 +1,4 @@
-const DB = {
+const db = {
     // --- CLAVES ---
     KEYS: {
         USUARIOS: 'sp_usuarios',
@@ -186,5 +186,5 @@ const DB = {
 };
 
 // Inicializar al cargar
-DB.inicializar();
-console.log('DB cargado correctamente', DB ? '✓' : '✗');
+db.inicializar();
+console.log('db cargado correctamente', db ? '✓' : '✗');

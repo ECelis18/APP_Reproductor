@@ -11,15 +11,15 @@ function setTabBib(tab) {
     document.getElementById('seccion-liked').classList.toggle('hidden', tab !== 'liked');
     const plTab = document.getElementById('tab-pl');
     const lkTab = document.getElementById('tab-lk');
-    if (plTab) { 
-        plTab.className = tab === 'playlists' 
-            ? 'px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold cursor-pointer' 
-            : 'px-4 py-1.5 rounded-full bg-surface text-text-muted text-xs font-semibold cursor-pointer'; 
+    if (plTab) {
+        plTab.className = tab === 'playlists'
+            ? 'px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold cursor-pointer'
+            : 'px-4 py-1.5 rounded-full bg-surface text-text-muted text-xs font-semibold cursor-pointer';
     }
-    if (lkTab) { 
-        lkTab.className = tab === 'liked' 
-            ? 'px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold cursor-pointer' 
-            : 'px-4 py-1.5 rounded-full bg-surface text-text-muted text-xs font-semibold cursor-pointer'; 
+    if (lkTab) {
+        lkTab.className = tab === 'liked'
+            ? 'px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold cursor-pointer'
+            : 'px-4 py-1.5 rounded-full bg-surface text-text-muted text-xs font-semibold cursor-pointer';
     }
     if (tab === 'liked') renderLiked();
 }
@@ -28,10 +28,10 @@ function setTabBib(tab) {
 // RENDERIZADO DE PLAYLISTS
 // ==========================================
 function renderPlaylists() {
-    const u = DB.getUsuarioActual();
-    const playlists = DB.getPlaylistsDeUsuario(u.id);
+    const u = db.getUsuarioActual();
+    const playlists = db.getPlaylistsDeUsuario(u.id);
     const el = document.getElementById('playlists-grid');
-    
+
     if (!playlists.length) {
         el.innerHTML = `<div class="col-span-full text-center py-20 text-text-muted">
             <span class="material-symbols-outlined text-6xl block mb-4 opacity-30">queue_music</span>
@@ -40,7 +40,7 @@ function renderPlaylists() {
         </div>`;
         return;
     }
-    
+
     el.innerHTML = playlists.map(p => `
         <div class="group cursor-pointer relative" onclick="verDetallePlaylist('${p.id}')">
             <div class="relative aspect-square rounded-xl overflow-hidden bg-surface mb-3 shadow-sm border border-border">
@@ -79,15 +79,15 @@ function renderPlaylists() {
 
 function verDetallePlaylist(playlistId) {
     playlistActualId = playlistId;
-    const u = DB.getUsuarioActual();
-    const playlist = DB.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistId);
+    const u = db.getUsuarioActual();
+    const playlist = db.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistId);
     if (!playlist) return;
-    
+
     document.getElementById('playlist-detalle-titulo').textContent = playlist.nombre;
     document.getElementById('playlist-detalle-nombre').textContent = playlist.nombre;
     document.getElementById('playlist-detalle-creador').textContent = `Creada por ${u.nombre}`;
     document.getElementById('playlist-detalle-desc').textContent = playlist.descripcion || 'Sin descripción';
-    
+
     // Portada
     const portadaEl = document.getElementById('playlist-detalle-portada');
     if (playlist.portada) {
@@ -95,27 +95,27 @@ function verDetallePlaylist(playlistId) {
     } else {
         portadaEl.innerHTML = '<span class="material-symbols-outlined text-text-muted text-4xl">queue_music</span>';
     }
-    
+
     // Cargar canciones de la playlist
     cargarCancionesPlaylist(playlistId);
-    
+
     document.getElementById('modal-playlist-detalle').style.display = 'flex';
 }
 
 function cargarCancionesPlaylist(playlistId) {
-    const u = DB.getUsuarioActual();
-    const playlist = DB.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistId);
+    const u = db.getUsuarioActual();
+    const playlist = db.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistId);
     if (!playlist) return;
-    
+
     const cancionesIds = playlist.canciones || [];
-    const todasCanciones = DB.getCanciones();
+    const todasCanciones = db.getCanciones();
     const canciones = todasCanciones.filter(c => cancionesIds.includes(c.id));
-    
+
     const totalEl = document.getElementById('playlist-detalle-total');
     totalEl.textContent = `${canciones.length} canción${canciones.length !== 1 ? 'es' : ''}`;
-    
+
     const listaEl = document.getElementById('playlist-canciones-lista');
-    
+
     if (!canciones.length) {
         listaEl.innerHTML = `
             <div class="text-center py-8 text-text-muted">
@@ -126,7 +126,7 @@ function cargarCancionesPlaylist(playlistId) {
         `;
         return;
     }
-    
+
     listaEl.innerHTML = canciones.map((c, index) => `
         <div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface border border-transparent hover:border-border transition-all">
             <div class="flex items-center gap-3 flex-1 min-w-0">
@@ -153,8 +153,8 @@ function cargarCancionesPlaylist(playlistId) {
 
 function quitarCancionDePlaylist(cancionId) {
     if (!playlistActualId || !confirm('¿Quitar esta canción de la playlist?')) return;
-    
-    DB.quitarCancionDePlaylist(playlistActualId, cancionId);
+
+    db.quitarCancionDePlaylist(playlistActualId, cancionId);
     cargarCancionesPlaylist(playlistActualId);
     renderPlaylists(); // Actualizar la vista de playlists
     toast('Canción removida de la playlist');
@@ -162,39 +162,39 @@ function quitarCancionDePlaylist(cancionId) {
 
 function abrirAgregarCancionAPlaylist() {
     if (!playlistActualId) return;
-    
+
     document.getElementById('agregar-cancion-playlist-id').value = playlistActualId;
-    
+
     // Obtener canciones que NO están ya en la playlist
-    const u = DB.getUsuarioActual();
-    const playlist = DB.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistActualId);
+    const u = db.getUsuarioActual();
+    const playlist = db.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistActualId);
     const cancionesEnPlaylist = playlist?.canciones || [];
-    
-    const todasCanciones = DB.getCanciones();
+
+    const todasCanciones = db.getCanciones();
     const cancionesDisponibles = todasCanciones.filter(c => !cancionesEnPlaylist.includes(c.id));
-    
+
     const select = document.getElementById('select-cancion-playlist');
-    
+
     if (!cancionesDisponibles.length) {
         select.innerHTML = '<option value="">No hay canciones disponibles</option>';
     } else {
-        select.innerHTML = '<option value="">-- Selecciona una canción --</option>' + 
+        select.innerHTML = '<option value="">-- Selecciona una canción --</option>' +
             cancionesDisponibles.map(c => `<option value="${c.id}">${c.titulo} — ${c.artista}</option>`).join('');
     }
-    
+
     document.getElementById('modal-agregar-cancion-playlist').style.display = 'flex';
 }
 
 function agregarCancionAPlaylist() {
     const playlistId = document.getElementById('agregar-cancion-playlist-id').value;
     const cancionId = document.getElementById('select-cancion-playlist').value;
-    
+
     if (!cancionId) {
         toast('Selecciona una canción', 'error');
         return;
     }
-    
-    DB.agregarCancionAPlaylist(playlistId, cancionId);
+
+    db.agregarCancionAPlaylist(playlistId, cancionId);
     cerrarAgregarCancionAPlaylist();
     cargarCancionesPlaylist(playlistId);
     renderPlaylists(); // Actualizar la vista de playlists
@@ -214,26 +214,26 @@ function cerrarModalPlaylistDetalle() {
 // REPRODUCIR CANCIÓN
 // ==========================================
 function reproducirCancion(id) {
-    const c = DB.getCanciones().find(x => x.id === id);
+    const c = db.getCanciones().find(x => x.id === id);
     if (!c) return;
-    
+
     sessionStorage.setItem('sp_now', JSON.stringify(c));
     const s = (elId, v) => { const e = document.getElementById(elId); if (e) e.textContent = v; };
     s('player-title', c.titulo || '—');
     s('player-artist', c.artista || '—');
     s('player-duration', c.duracion || '—');
-    
+
     const cw = document.getElementById('player-cover-wrap');
     if (cw) {
-        cw.innerHTML = c.portada 
-            ? `<img src="${c.portada}" class="w-full h-full object-cover rounded-lg">` 
+        cw.innerHTML = c.portada
+            ? `<img src="${c.portada}" class="w-full h-full object-cover rounded-lg">`
             : '<span class="material-symbols-outlined text-text-muted">music_note</span>';
     }
-    
+
     // Actualizar like en player bar
-    const u = DB.getUsuarioActual();
+    const u = db.getUsuarioActual();
     if (u) {
-        const liked = DB.tienelike(u.id, id);
+        const liked = db.tienelike(u.id, id);
         const likeIcon = document.getElementById('player-like-icon');
         if (likeIcon) {
             likeIcon.textContent = liked ? 'favorite' : 'favorite_border';
@@ -241,7 +241,7 @@ function reproducirCancion(id) {
             likeIcon.style.fontVariationSettings = liked ? "'FILL' 1" : "'FILL' 0";
         }
     }
-    
+
     toast('Reproduciendo: ' + c.titulo);
 }
 
@@ -253,11 +253,11 @@ function reproducirLiked(id, colaIds) {
 // RENDERIZADO DE CANCIONES CON LIKE
 // ==========================================
 function renderLiked() {
-    const u = DB.getUsuarioActual();
-    const likeIds = DB.getLikesDeUsuario(u.id);
-    const canciones = DB.getCanciones().filter(c => likeIds.includes(c.id));
+    const u = db.getUsuarioActual();
+    const likeIds = db.getLikesDeUsuario(u.id);
+    const canciones = db.getCanciones().filter(c => likeIds.includes(c.id));
     const el = document.getElementById('liked-lista');
-    
+
     if (!canciones.length) {
         el.innerHTML = `<div class="text-center py-20 text-text-muted">
             <span class="material-symbols-outlined text-6xl block mb-4 opacity-30">favorite</span>
@@ -266,9 +266,9 @@ function renderLiked() {
         </div>`;
         return;
     }
-    
+
     const colaIds = canciones.map(c => c.id);
-    
+
     el.innerHTML = canciones.map((c, i) => `
         <div class="flex items-center p-3 rounded-xl hover:bg-surface transition-colors group cursor-pointer"
                 onclick="reproducirLiked('${c.id}',${JSON.stringify(colaIds)})">
@@ -296,9 +296,9 @@ function abrirModalPlaylist(plId) {
     m.classList.add('open');
     document.getElementById('pl-id-edit').value = plId || '';
     document.getElementById('modal-pl-titulo').textContent = plId ? 'Editar Playlist' : 'Nueva Playlist';
-    
+
     if (plId) {
-        const p = DB.getPlaylistsDeUsuario(DB.getUsuarioActual().id).find(x => x.id === plId);
+        const p = db.getPlaylistsDeUsuario(db.getUsuarioActual().id).find(x => x.id === plId);
         if (p) {
             document.getElementById('pl-nombre').value = p.nombre || '';
             document.getElementById('pl-desc').value = p.descripcion || '';
@@ -311,48 +311,48 @@ function abrirModalPlaylist(plId) {
     }
 }
 
-function cerrarModalPlaylist() { 
-    document.getElementById('modal-playlist').classList.remove('open'); 
+function cerrarModalPlaylist() {
+    document.getElementById('modal-playlist').classList.remove('open');
 }
 
 function prevPlPortada(url) {
     const p = document.getElementById('pl-portada-prev');
     if (!p) return;
-    p.innerHTML = url 
-        ? `<img src="${url}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-text-muted text-2xl\\'>broken_image</span>'">` 
+    p.innerHTML = url
+        ? `<img src="${url}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-text-muted text-2xl\\'>broken_image</span>'">`
         : '<span class="material-symbols-outlined text-text-muted text-2xl">image</span>';
 }
 
 function guardarPlaylist() {
-    const u = DB.getUsuarioActual();
+    const u = db.getUsuarioActual();
     if (!u) return;
-    
+
     const id = document.getElementById('pl-id-edit').value;
     const nombre = document.getElementById('pl-nombre').value.trim();
     const desc = document.getElementById('pl-desc').value.trim();
     const portada = document.getElementById('pl-portada').value.trim();
-    
+
     if (!nombre) return toast('El nombre es obligatorio', 'error');
-    
+
     if (id) {
-        DB.editarPlaylist(id, { nombre, descripcion: desc, portada });
+        db.editarPlaylist(id, { nombre, descripcion: desc, portada });
         toast('Playlist actualizada ✓');
     } else {
-        DB.crearPlaylist({ nombre, descripcion: desc, portada, userId: u.id });
+        db.crearPlaylist({ nombre, descripcion: desc, portada, userId: u.id });
         toast('Playlist creada ✓');
     }
-    
+
     cerrarModalPlaylist();
     renderPlaylists();
 }
 
-function editarPlaylist(id) { 
-    abrirModalPlaylist(id); 
+function editarPlaylist(id) {
+    abrirModalPlaylist(id);
 }
 
 function eliminarPlaylist(id) {
     if (!confirm('¿Eliminar esta playlist?')) return;
-    DB.eliminarPlaylist(id);
+    db.eliminarPlaylist(id);
     renderPlaylists();
     toast('Playlist eliminada');
 }
@@ -368,9 +368,9 @@ function toast(msg, tipo = 'ok') {
     t.style.opacity = '1';
     t.style.transform = 'translateX(-50%) translateY(0)';
     clearTimeout(t._t);
-    t._t = setTimeout(() => { 
-        t.style.opacity = '0'; 
-        t.style.transform = 'translateX(-50%) translateY(2rem)'; 
+    t._t = setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(-50%) translateY(2rem)';
     }, 2400);
 }
 
@@ -378,32 +378,32 @@ function toast(msg, tipo = 'ok') {
 // INICIALIZACIÓN
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    const u = DB.getUsuarioActual();
-    if (!u) { 
-        location.href = 'login-registro.html'; 
-        return; 
+    const u = db.getUsuarioActual();
+    if (!u) {
+        location.href = 'login-registro.html';
+        return;
     }
-    
+
     renderPlaylists();
-    
+
     // Restaurar player bar
     try {
         const saved = sessionStorage.getItem('sp_now');
         if (!saved) return;
-        
+
         const c = JSON.parse(saved);
         const s = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
         s('player-title', c.titulo || '—');
         s('player-artist', c.artista || '—');
         s('player-duration', c.duracion || '—');
-        
+
         const cw = document.getElementById('player-cover-wrap');
         if (cw && c.portada) {
             cw.innerHTML = `<img src="${c.portada}" class="w-full h-full object-cover rounded-lg">`;
         }
-        
+
         // Actualizar like en player bar
-        const liked = DB.tienelike(u.id, c.id);
+        const liked = db.tienelike(u.id, c.id);
         const likeIcon = document.getElementById('player-like-icon');
         if (likeIcon) {
             likeIcon.textContent = liked ? 'favorite' : 'favorite_border';

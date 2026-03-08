@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('loginEmail')?.value.trim();
             const pass = document.getElementById('loginPassword')?.value;
             if (!email || !pass) return showErr('loginErr', 'Completa todos los campos');
-            const r = DB.loginUsuario(email, pass);
+            const r = db.loginUsuario(email, pass);
             if (r.ok) location.href = 'inicio.html';
             else showErr('loginErr', r.msg || 'Credenciales incorrectas');
         });
@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!nombre || !username || !email || !pass) return showErr('regErr', 'Completa todos los campos');
             if (pass.length < 6) return showErr('regErr', 'Contraseña mínimo 6 caracteres');
 
-            const r = DB.registrarUsuario({ nombre, usuario: username, email, password: pass, avatar, rol });
+            const r = db.registrarUsuario({ nombre, usuario: username, email, password: pass, avatar, rol });
             if (r.ok) {
-                DB.setUsuarioActual({ id: r.usuario.id, nombre: r.usuario.nombre, usuario: r.usuario.usuario, avatar: r.usuario.avatar, email: r.usuario.email, rol: r.usuario.rol });
+                db.setUsuarioActual({ id: r.usuario.id, nombre: r.usuario.nombre, usuario: r.usuario.usuario, avatar: r.usuario.avatar, email: r.usuario.email, rol: r.usuario.rol });
                 location.href = 'inicio.html';
             } else showErr('regErr', r.msg || 'Error al registrar');
         });
