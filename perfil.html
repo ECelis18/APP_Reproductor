@@ -5,17 +5,82 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="tema.css">
-  <title>Perfil</title>
+  <title>Perfil — SpotiPobre</title>
+  <style>
+    .input-sp {
+      width: 100%;
+      padding: .625rem .875rem;
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: .75rem;
+      font-size: .8125rem;
+      color: var(--color-text);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .input-sp:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+    }
+
+    .label-sp {
+      display: block;
+      font-size: .6875rem;
+      font-weight: 700;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .375rem;
+    }
+
+    .tab-admin {
+      padding: .75rem 1rem;
+      font-size: .8125rem;
+      font-weight: 700;
+      border-bottom: 2px solid transparent;
+      color: var(--color-muted);
+      cursor: pointer;
+      transition: color .15s;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+    }
+
+    .tab-admin.activo {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    #sp-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(2rem);
+      z-index: 9999;
+      padding: .75rem 1.25rem;
+      border-radius: 1rem;
+      font-size: .8125rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+      transition: all .3s cubic-bezier(.34, 1.56, .64, 1);
+      opacity: 0;
+      pointer-events: none;
+      color: #fff;
+    }
+  </style>
 </head>
 
 <body class="bg-bg text-text font-display">
   <div class="flex h-screen overflow-hidden">
-    <!-- Sidebar -->
+
+    <!-- Sidebar (original) -->
     <aside class="w-64 bg-surface border-r border-border flex flex-col shrink-0">
       <div class="p-6 flex items-center gap-3">
         <div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
@@ -25,57 +90,44 @@
       </div>
       <nav class="flex-1 px-4 space-y-1">
         <div class="text-xs font-semibold text-text-muted px-3 py-2 uppercase tracking-wider">Menú</div>
-        <a id="nav-home"
-          class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
           href="inicio.html">
-          <span class="material-symbols-outlined">home</span>
-          Inicio
+          <span class="material-symbols-outlined">home</span>Inicio
         </a>
-        <a id="nav-buscar"
-          class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
           href="buscar.html">
-          <span class="material-symbols-outlined">search</span>
-          Buscar
+          <span class="material-symbols-outlined">search</span>Buscar
         </a>
-        <a id="nav-library"
-          class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
           href="biblioteca.html">
-          <span class="material-symbols-outlined">library_music</span>
-          Biblioteca
+          <span class="material-symbols-outlined">library_music</span>Biblioteca
         </a>
-
         <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
           href="#">
-          <span class="material-symbols-outlined">album</span>
-          Álbumes
+          <span class="material-symbols-outlined">album</span>Álbumes
         </a>
-
         <div class="text-xs font-semibold text-text-muted px-3 py-2 mt-6 uppercase tracking-wider">Cuenta</div>
-        <a id="nav-perfil" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium"
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium"
           href="perfil.html">
-          <span class="material-symbols-outlined">account_circle</span>
-          Mi perfil
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">account_circle</span>Mi
+          perfil
         </a>
-        <a id="nav-logout"
-          class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
-          href="login-registro.html" onclick="cerrarSesion(); return false;">
-          <span class="material-symbols-outlined">logout</span>
-          Cerrar sesión
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+          href="#" onclick="cerrarSesion()">
+          <span class="material-symbols-outlined">logout</span>Cerrar sesión
         </a>
       </nav>
       <div class="p-4 border-t border-border">
-        <button
-          class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity"
-          onclick="window.location.href='biblioteca.html'">
-          <span class="material-symbols-outlined text-sm">add</span>
-          Crear playlist
+        <button onclick="location.href='biblioteca.html'"
+          class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
+          <span class="material-symbols-outlined text-sm">add</span>Crear playlist
         </button>
       </div>
     </aside>
 
-    <!-- Main Content Area with Header -->
-    <div class="flex-1 flex flex-col overflow-y-auto no-scrollbar">
-      <!-- Header -->
+    <!-- Main (layout original) -->
+    <div class="flex-1 flex flex-col overflow-y-auto no-scrollbar pb-28">
+      <!-- Header (original) -->
       <header
         class="sticky top-0 z-10 bg-bg/80 backdrop-blur-md px-8 py-4 flex items-center justify-between border-b border-border">
         <div class="flex items-center gap-4 flex-1">
@@ -93,9 +145,9 @@
             <span
               class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xl">search</span>
             <input
-              class="w-full pl-11 pr-4 py-2.5 bg-surface border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-sm text-text placeholder-text-muted"
+              class="w-full pl-11 pr-4 py-2.5 bg-surface border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-sm text-text placeholder-text-muted outline-none"
               placeholder="Buscar artistas, canciones o podcasts" type="text"
-              onkeydown="if(event.key==='Enter') window.location.href='buscar.html?q='+this.value" />
+              onkeydown="if(event.key==='Enter') location.href='buscar.html?q='+encodeURIComponent(this.value)" />
           </div>
         </div>
         <div class="flex items-center gap-4">
@@ -121,116 +173,101 @@
         </div>
       </header>
 
-      <!-- Profile Content (original) -->
+      <!-- Profile Content (diseño original) -->
       <main class="flex flex-col max-w-[960px] mx-auto w-full flex-1">
         <!-- Profile Section -->
         <div class="flex flex-col items-center gap-6 p-8 @container">
           <div class="relative">
-            <div
-              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-32 md:size-40 border-4 border-border shadow-sm"
-              data-alt="User profile picture" id="profile-avatar"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3kR8nxAYv3WBfWWwfr2fB3J1rIDmjLrnIIExV3XSBjJpcvs7JK7aE7Vz6sfO1P0jxW7W1vWh2WFyXzQxuMGiI0X1rWoMjc9F7U53cj7cVVKy6JEUGhmPXIxiCJna-USTHphAEuHtHiyNFvMkP38eo0ap8-slrcDprFAq_2W6PwMjb6QXvjslJv-wEQKJgaGZ-XajLjfK4NDE1VxIAIxvPR8CjlkDChkcvp3fgrbST-0XAiT87WriDAOgVtEML9xVuE37_kPI");'>
+            <div id="profile-avatar"
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-32 md:size-40 border-4 border-border shadow-sm">
             </div>
-            <button
-              class="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-white"
-              id="editProfileBtn">
+            <button onclick="abrirEditarPerfil()"
+              class="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-lg flex items-center justify-center border-2 border-white">
               <span class="material-symbols-outlined text-sm">edit</span>
             </button>
           </div>
           <div class="flex flex-col items-center justify-center text-center">
             <h1 class="text-text text-3xl font-bold tracking-tight" id="profile-name">Cargando...</h1>
-            <p class="text-text-muted text-base font-normal" id="profile-handle">@cargando • Premium Member</p>
+            <p class="text-text-muted text-base font-normal" id="profile-handle">@cargando</p>
           </div>
-          <button
-            class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-11 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-primary/90 transition-all"
-            id="editProfileBtn2">
-            <span>Edit Profile</span>
+          <button onclick="abrirEditarPerfil()"
+            class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-11 px-6 bg-primary text-white text-sm font-bold tracking-wide hover:bg-primary/90 transition-all">
+            <span>Editar Perfil</span>
           </button>
         </div>
 
+        <!-- Card admin (solo para admins) -->
+        <div id="admin-entry"
+          class="hidden mx-8 mb-4 p-4 bg-primary/5 border border-primary/20 rounded-2xl flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="size-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary"
+                style="font-variation-settings:'FILL' 1">admin_panel_settings</span>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Modo Administrador</p>
+              <p class="text-xs text-text-muted" id="admin-entry-stats">—</p>
+            </div>
+          </div>
+          <button onclick="abrirModalAdmin()"
+            class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-md shadow-primary/25 shrink-0">
+            <span class="material-symbols-outlined text-sm">tune</span>Gestionar
+          </button>
+        </div>
 
-
-        <!-- Stats Cards -->
+        <!-- Stats Cards (diseño original) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 px-6 md:px-10 pb-8">
-          <div class="flex flex-col gap-2 rounded-xl p-6 bg-surface hover:shadow-sm transition-shadow">
-            <div class="flex items-center justify-between">
-              <p class="text-primary text-xs font-bold uppercase tracking-widest">Followers</p>
-              <span class="material-symbols-outlined text-primary text-sm">groups</span>
-            </div>
-            <p class="text-text tracking-tight text-3xl font-bold">1,284</p>
-            <p class="text-green-600 text-sm font-medium flex items-center gap-1">
-              <span class="material-symbols-outlined text-sm">trending_up</span> +2.4% this month
-            </p>
-          </div>
-          <div class="flex flex-col gap-2 rounded-xl p-6 bg-surface hover:shadow-sm transition-shadow">
-            <div class="flex items-center justify-between">
-              <p class="text-primary text-xs font-bold uppercase tracking-widest">Following</p>
-              <span class="material-symbols-outlined text-primary text-sm">person_add</span>
-            </div>
-            <p class="text-text tracking-tight text-3xl font-bold">450</p>
-            <p class="text-text-muted text-sm font-medium">Stable reach</p>
-          </div>
           <div class="flex flex-col gap-2 rounded-xl p-6 bg-surface hover:shadow-sm transition-shadow">
             <div class="flex items-center justify-between">
               <p class="text-primary text-xs font-bold uppercase tracking-widest">Playlists</p>
               <span class="material-symbols-outlined text-primary text-sm">library_music</span>
             </div>
-            <p class="text-text tracking-tight text-3xl font-bold">24</p>
-            <p class="text-primary/70 text-sm font-medium">3 New this week</p>
+            <p class="text-text tracking-tight text-3xl font-bold" id="stat-playlists">0</p>
+            <p class="text-text-muted text-sm font-medium">Creadas por ti</p>
+          </div>
+          <div class="flex flex-col gap-2 rounded-xl p-6 bg-surface hover:shadow-sm transition-shadow">
+            <div class="flex items-center justify-between">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest">Me gusta</p>
+              <span class="material-symbols-outlined text-primary text-sm">favorite</span>
+            </div>
+            <p class="text-text tracking-tight text-3xl font-bold" id="stat-likes">0</p>
+            <p class="text-text-muted text-sm font-medium">Canciones favoritas</p>
+          </div>
+          <div class="flex flex-col gap-2 rounded-xl p-6 bg-surface hover:shadow-sm transition-shadow">
+            <div class="flex items-center justify-between">
+              <p class="text-primary text-xs font-bold uppercase tracking-widest">Canciones</p>
+              <span class="material-symbols-outlined text-primary text-sm">music_note</span>
+            </div>
+            <p class="text-text tracking-tight text-3xl font-bold" id="stat-canciones">0</p>
+            <p class="text-text-muted text-sm font-medium">En biblioteca</p>
           </div>
         </div>
 
-        <!-- Recently Played Tracks (original) -->
+        <!-- Playlists recientes -->
         <div class="px-6 md:px-10 pb-24">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-text text-xl font-bold leading-tight tracking-tight">Recently Played Tracks</h2>
-            <button class="text-primary text-sm font-bold hover:underline">View All</button>
+            <h2 class="text-text text-xl font-bold leading-tight tracking-tight">Mis Playlists</h2>
+            <a href="biblioteca.html" class="text-primary text-sm font-bold hover:underline">Ver todas →</a>
           </div>
-          <div class="flex flex-col gap-1">
-            <!-- Track Items (original) -->
-            <div
-              class="group flex items-center justify-between p-3 rounded-lg hover:bg-surface cursor-pointer transition-colors border-b border-border/50 last:border-0">
-              <div class="flex items-center gap-4">
-                <div class="relative size-12 rounded-lg bg-surface overflow-hidden">
-                  <img class="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZoLj5LcHW2PSEoKDE88qTeeoTry6LbqPx-ib1gK94fjrOO-o9JyTF0uXkEAh1clAE4qDdMo3pGdeqr6BakMGp9xfgZVIuz-gkWaibjV2zsnMTMPVOUUXEYsuTuU8sRNI5tcx-Bu35yuqdMqdM3g2vsjmWtfd-fu7k2d6L6zs-TbnZUTjXvUL-ckMWe6__8hIrsCxs9zg3CnkQGHPp9oHcUlriWdi7QPXozfs_L0s5tKlUp4JOvFjkRH7iEMzvFRnifmoMfPM" />
-                  <div
-                    class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span class="material-symbols-outlined text-white text-2xl">play_arrow</span>
-                  </div>
-                </div>
-                <div class="flex flex-col">
-                  <p class="text-text text-sm font-semibold">Midnight City</p>
-                  <p class="text-text-muted text-xs">M83 • Hurry Up, We're Dreaming</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-6">
-                <p class="text-text-muted text-xs hidden sm:block">4:03</p>
-                <button class="text-text-muted hover:text-primary transition-colors">
-                  <span class="material-symbols-outlined">more_horiz</span>
-                </button>
-              </div>
-            </div>
-            <!-- Más tracks... (mantener todos los originales) -->
-          </div>
+          <div id="perfil-playlists" class="flex flex-col gap-1"></div>
         </div>
       </main>
     </div>
   </div>
 
-  <!-- Bottom Player Bar -->
-  <!-- Persistent Music Player Bar -->
+  <!-- Player bar (original) -->
   <footer class="fixed bottom-0 left-0 right-0 h-24 bg-surface border-t border-border flex items-center px-6 z-20">
     <div class="flex items-center gap-4 w-1/4">
-      <img alt="Current" class="size-14 rounded-lg shadow-md"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGH2LtKdcL5zuxJcDotbPmDQ6fhRl3CVhRMaKMQ2cOo4jcmvvClNhEDYo0foDOWmsv_-5MHUlXheQX22l91PuJrV6Xdf129dBnnrjOqm-LMIbLlLcIl1MFyhB-QQVmP0rvKirjqzZZAPQxKr--sBHP3hH44wcbHg8FF86EriG7rXVc-RyKyLc_GFqWR3CJSts2hZL1XX5VYCjNXVcka8YRtgFsb7MFVDKrDY6V6eyYJFwe3RQPKnoaFN5OEDPdQtGTDoxwKgY" />
+      <div id="player-cover-wrap"
+        class="size-14 rounded-lg shadow-md bg-border overflow-hidden shrink-0 flex items-center justify-center">
+        <span class="material-symbols-outlined text-text-muted">music_note</span>
+      </div>
       <div class="overflow-hidden">
-        <p class="text-sm font-bold truncate">Electric Pulse</p>
-        <p class="text-xs text-text-muted truncate">The Synths</p>
+        <p class="text-sm font-bold truncate" id="player-title">Sin reproducir</p>
+        <p class="text-xs text-text-muted truncate" id="player-artist">—</p>
       </div>
       <div class="flex gap-2 ml-2">
-        <button class="text-primary"><span class="material-symbols-outlined text-lg"
-            style="font-variation-settings: 'FILL' 1">favorite</span></button>
+        <button class="text-text-muted"><span class="material-symbols-outlined text-lg">favorite_border</span></button>
       </div>
     </div>
     <div class="flex-1 flex flex-col items-center max-w-2xl px-8">
@@ -245,14 +282,11 @@
             class="material-symbols-outlined text-3xl">skip_next</span></button>
       </div>
       <div class="w-full flex items-center gap-3">
-        <span class="text-[10px] font-bold text-text-muted w-8 text-right">2:15</span>
-        <div class="flex-1 h-1 bg-border rounded-full relative group cursor-pointer">
-          <div class="absolute top-0 left-0 h-full w-[60%] bg-primary rounded-full"></div>
-          <div
-            class="absolute top-1/2 left-[60%] -translate-y-1/2 size-3 bg-primary border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-          </div>
+        <span class="text-[10px] font-bold text-text-muted w-8 text-right">0:00</span>
+        <div class="flex-1 h-1 bg-border rounded-full">
+          <div class="h-full w-0 bg-primary rounded-full"></div>
         </div>
-        <span class="text-[10px] font-bold text-text-muted w-8">4:12</span>
+        <span class="text-[10px] font-bold text-text-muted w-8" id="player-duration">—</span>
       </div>
     </div>
     <div class="w-1/4 flex items-center justify-end gap-4">
@@ -260,29 +294,256 @@
           class="material-symbols-outlined">queue_music</span></button>
       <div class="flex items-center gap-2 w-32">
         <span class="material-symbols-outlined text-text-muted text-xl">volume_up</span>
-        <div class="flex-1 h-1 bg-border rounded-full relative">
-          <div class="absolute top-0 left-0 h-full w-[70%] bg-primary rounded-full"></div>
+        <div class="flex-1 h-1 bg-border rounded-full">
+          <div class="h-full w-[70%] bg-primary rounded-full"></div>
         </div>
       </div>
     </div>
   </footer>
 
+  <!-- ============================================================ -->
+  <!-- MODAL ADMIN — Panel completo desde perfil                     -->
+  <!-- ============================================================ -->
+  <div id="modal-admin" class="fixed inset-0 z-[90] items-center justify-center p-3" style="display:none">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-md" onclick="cerrarModalAdmin()"></div>
+    <div class="relative bg-bg border border-border rounded-2xl shadow-2xl w-full max-w-3xl flex flex-col"
+      style="max-height:92vh">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="size-9 bg-primary rounded-xl flex items-center justify-center text-white shrink-0">
+            <span class="material-symbols-outlined text-lg"
+              style="font-variation-settings:'FILL' 1">admin_panel_settings</span>
+          </div>
+          <div>
+            <h2 class="font-black text-text text-base leading-none">Panel de Administración</h2>
+            <p class="text-xs text-text-muted mt-0.5">SpotiPobre</p>
+          </div>
+        </div>
+        <button onclick="cerrarModalAdmin()"
+          class="size-9 flex items-center justify-center rounded-xl hover:bg-surface text-text-muted transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <!-- Tabs -->
+      <div class="flex border-b border-border px-6 shrink-0 overflow-x-auto no-scrollbar">
+        <button class="tab-admin activo" data-tab="canciones" onclick="tabAdmin('canciones')">
+          <span class="material-symbols-outlined text-sm align-middle mr-1">music_note</span>Canciones
+        </button>
+        <button class="tab-admin" data-tab="albums" onclick="tabAdmin('albums')">
+          <span class="material-symbols-outlined text-sm align-middle mr-1">album</span>Álbumes
+        </button>
+        <button class="tab-admin" data-tab="usuarios" onclick="tabAdmin('usuarios')">
+          <span class="material-symbols-outlined text-sm align-middle mr-1">group</span>Usuarios
+        </button>
+      </div>
+      <!-- Body -->
+      <div class="flex-1 overflow-y-auto p-6 min-h-0">
 
-  <!-- Cargar el tema y la configuración de Tailwind -->
+        <!-- TAB CANCIONES -->
+        <div id="tab-canciones">
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-xs font-bold text-text-muted uppercase tracking-widest"><span id="total-c">0</span> canciones
+            </p>
+            <button onclick="abrirFormC()"
+              class="flex items-center gap-1.5 px-3 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:opacity-90">
+              <span class="material-symbols-outlined text-sm">add</span>Nueva canción
+            </button>
+          </div>
+          <!-- Form canción -->
+          <div id="form-c" class="hidden mb-5 rounded-2xl border border-primary/20 bg-primary/5 overflow-hidden">
+            <div class="flex items-center justify-between px-5 py-3 border-b border-primary/10">
+              <h3 id="form-c-titulo" class="font-bold text-text text-sm">Nueva Canción</h3>
+              <button onclick="cerrarFormC()" class="text-text-muted hover:text-text"><span
+                  class="material-symbols-outlined text-lg">close</span></button>
+            </div>
+            <div class="p-5 space-y-4">
+              <input type="hidden" id="c-id">
+              <!-- Portada -->
+              <div class="flex gap-4 items-start">
+                <div id="prev-c-portada"
+                  class="size-20 rounded-xl bg-border border border-border flex items-center justify-center shrink-0 overflow-hidden">
+                  <span class="material-symbols-outlined text-text-muted text-3xl">image</span>
+                </div>
+                <div class="flex-1">
+                  <label class="label-sp">Foto / Portada (URL)</label>
+                  <input id="c-portada" type="url" placeholder="https://i.scdn.co/image/..." class="input-sp"
+                    oninput="prevImg('c-portada','prev-c-portada')">
+                  <p class="text-[10px] text-text-muted mt-1">URL de imagen cuadrada pública</p>
+                </div>
+              </div>
+              <!-- Campos -->
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="label-sp">Nombre / Título *</label><input id="c-titulo" type="text"
+                    placeholder="Título" class="input-sp"></div>
+                <div><label class="label-sp">Artista *</label><input id="c-artista" type="text" placeholder="Artista"
+                    class="input-sp"></div>
+                <div>
+                  <label class="label-sp">Categoría / Género</label>
+                  <select id="c-genero" class="input-sp">
+                    <option value="">Sin categoría</option>
+                    <option>Pop</option>
+                    <option>Rock</option>
+                    <option>Electrónica</option>
+                    <option>Hip-Hop</option>
+                    <option>Reggaeton</option>
+                    <option>Jazz</option>
+                    <option>Clásica</option>
+                    <option>R&B</option>
+                    <option>Metal</option>
+                    <option>Folk</option>
+                    <option>Latina</option>
+                    <option>Vallenato</option>
+                    <option>Salsa</option>
+                    <option>Cumbia</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+                <div><label class="label-sp">Duración (ej: 3:20)</label><input id="c-duracion" type="text"
+                    placeholder="3:20" class="input-sp"></div>
+                <div>
+                  <label class="label-sp">Álbum</label>
+                  <select id="c-album" class="input-sp">
+                    <option value="">Sin álbum</option>
+                  </select>
+                </div>
+                <div><label class="label-sp">URL Audio (YouTube / SoundCloud) *</label><input id="c-audio" type="url"
+                    placeholder="https://youtube.com/watch?v=..." class="input-sp"></div>
+              </div>
+              <div class="flex gap-2 pt-1">
+                <button onclick="guardarC()"
+                  class="px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90">
+                  <span class="material-symbols-outlined text-sm align-middle">save</span> Guardar
+                </button>
+                <button onclick="cerrarFormC()"
+                  class="px-5 py-2.5 bg-surface border border-border text-text text-sm font-bold rounded-xl hover:bg-border transition-colors">Cancelar</button>
+              </div>
+            </div>
+          </div>
+          <div id="lista-c" class="space-y-1.5"></div>
+        </div>
+
+        <!-- TAB ÁLBUMES -->
+        <div id="tab-albums" class="hidden">
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-xs font-bold text-text-muted uppercase tracking-widest"><span id="total-a">0</span> álbumes
+            </p>
+            <button onclick="abrirFormA()"
+              class="flex items-center gap-1.5 px-3 py-2 bg-primary text-white text-xs font-bold rounded-xl hover:opacity-90">
+              <span class="material-symbols-outlined text-sm">add</span>Nuevo álbum
+            </button>
+          </div>
+          <div id="form-a" class="hidden mb-5 rounded-2xl border border-primary/20 bg-primary/5 overflow-hidden">
+            <div class="flex items-center justify-between px-5 py-3 border-b border-primary/10">
+              <h3 id="form-a-titulo" class="font-bold text-text text-sm">Nuevo Álbum</h3>
+              <button onclick="cerrarFormA()" class="text-text-muted hover:text-text"><span
+                  class="material-symbols-outlined text-lg">close</span></button>
+            </div>
+            <div class="p-5 space-y-4">
+              <input type="hidden" id="a-id">
+              <div class="flex gap-4 items-start">
+                <div id="prev-a-portada"
+                  class="size-20 rounded-xl bg-border border border-border flex items-center justify-center shrink-0 overflow-hidden">
+                  <span class="material-symbols-outlined text-text-muted text-3xl">album</span>
+                </div>
+                <div class="flex-1">
+                  <label class="label-sp">Portada del Álbum (URL)</label>
+                  <input id="a-portada" type="url" placeholder="https://..." class="input-sp"
+                    oninput="prevImg('a-portada','prev-a-portada')">
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="label-sp">Título *</label><input id="a-titulo" type="text"
+                    placeholder="Nombre del álbum" class="input-sp"></div>
+                <div><label class="label-sp">Artista *</label><input id="a-artista" type="text" placeholder="Artista"
+                    class="input-sp"></div>
+                <div>
+                  <label class="label-sp">Género</label>
+                  <select id="a-genero" class="input-sp">
+                    <option value="">Sin género</option>
+                    <option>Pop</option>
+                    <option>Rock</option>
+                    <option>Electrónica</option>
+                    <option>Hip-Hop</option>
+                    <option>Reggaeton</option>
+                    <option>Jazz</option>
+                    <option>Clásica</option>
+                    <option>R&B</option>
+                    <option>Metal</option>
+                    <option>Folk</option>
+                    <option>Latina</option>
+                    <option>Vallenato</option>
+                    <option>Salsa</option>
+                    <option>Cumbia</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+                <div><label class="label-sp">Año</label><input id="a-año" type="number" placeholder="2024" min="1900"
+                    max="2099" class="input-sp"></div>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="guardarA()"
+                  class="px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90">
+                  <span class="material-symbols-outlined text-sm align-middle">save</span> Guardar
+                </button>
+                <button onclick="cerrarFormA()"
+                  class="px-5 py-2.5 bg-surface border border-border text-text text-sm font-bold rounded-xl hover:bg-border transition-colors">Cancelar</button>
+              </div>
+            </div>
+          </div>
+          <div id="lista-a" class="grid grid-cols-2 gap-3"></div>
+        </div>
+
+        <!-- TAB USUARIOS -->
+        <div id="tab-usuarios" class="hidden">
+          <p class="text-xs font-bold text-text-muted uppercase tracking-widest mb-4"><span id="total-u">0</span>
+            usuarios</p>
+          <div id="lista-u" class="space-y-2"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal editar perfil (diseño original) -->
+  <div id="modal-editar-perfil" class="fixed inset-0 z-[80] items-center justify-center p-4" style="display:none">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="cerrarEditarPerfil()"></div>
+    <div class="relative bg-bg border border-border rounded-2xl shadow-2xl w-full max-w-sm p-6 z-10">
+      <h3 class="text-base font-black text-text mb-4">Editar Perfil</h3>
+      <div class="flex gap-3 items-center mb-4">
+        <div id="prev-avatar-edit"
+          class="size-14 rounded-xl bg-border border border-border shrink-0 overflow-hidden flex items-center justify-center">
+          <span class="material-symbols-outlined text-text-muted">person</span>
+        </div>
+        <div class="flex-1">
+          <label class="label-sp">URL Avatar</label>
+          <input id="edit-avatar" type="url" placeholder="https://..." class="input-sp"
+            oninput="prevAvatarEdit(this.value)">
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div><label class="label-sp">Nombre *</label><input id="edit-nombre" type="text" class="input-sp"></div>
+        <div>
+          <label class="label-sp">Nueva contraseña <span class="font-normal normal-case">(vacío = no
+              cambiar)</span></label>
+          <input id="edit-password" type="password" placeholder="••••••••" class="input-sp">
+        </div>
+      </div>
+      <div class="flex gap-2 mt-5">
+        <button onclick="guardarPerfil()"
+          class="flex-1 py-2.5 bg-primary text-white font-bold text-sm rounded-xl hover:opacity-90">Guardar</button>
+        <button onclick="cerrarEditarPerfil()"
+          class="flex-1 py-2.5 bg-surface border border-border text-text font-bold text-sm rounded-xl hover:bg-border transition-colors">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sp-toast"></div>
+
   <script src="js/tailwind-config.js"></script>
-  <!-- Para manejar el cambio de tema -->
+  <script src="js/bd.js"></script>
   <script src="js/tema.js"></script>
-  <script>
-    // Cargar datos de perfil
-    document.addEventListener('DOMContentLoaded', function () {
-      const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
-      if (usuarioActual) {
-        document.getElementById('profile-name').textContent = usuarioActual.nombre;
-        document.getElementById('profile-handle').textContent = usuarioActual.usuario + ' • Premium Member';
-        document.getElementById('profile-avatar').style.backgroundImage = `url("${usuarioActual.avatar}")`;
-      }
-    });
-  </script>
+  <script src="js/perfil.js"></script>
 </body>
 
 </html>

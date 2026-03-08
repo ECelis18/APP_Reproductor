@@ -10,13 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="tema.css">
-    <title>Inicio</title>
+    <title>Inicio — SpotiPobre</title>
 </head>
 
 <body class="bg-bg text-text font-display">
     <div class="flex h-screen overflow-hidden">
 
-        <!-- Sidebar -->
+        <!-- Sidebar (original) -->
         <aside class="w-64 bg-surface border-r border-border flex flex-col shrink-0">
             <div class="p-6 flex items-center gap-3">
                 <div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
@@ -26,41 +26,34 @@
             </div>
             <nav class="flex-1 px-4 space-y-1">
                 <div class="text-xs font-semibold text-text-muted px-3 py-2 uppercase tracking-wider">Menú</div>
-                <a id="nav-inicio"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium"
-                    href="home.html">
-                    <span class="material-symbols-outlined">home</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium"
+                    href="inicio.html">
+                    <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">home</span>
                     Inicio
                 </a>
-                <a id="nav-buscar"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
                     href="buscar.html">
                     <span class="material-symbols-outlined">search</span>
                     Buscar
                 </a>
-                <a id="nav-library"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
                     href="biblioteca.html">
                     <span class="material-symbols-outlined">library_music</span>
                     Biblioteca
                 </a>
-
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
                     href="#">
                     <span class="material-symbols-outlined">album</span>
                     Álbumes
                 </a>
-
                 <div class="text-xs font-semibold text-text-muted px-3 py-2 mt-6 uppercase tracking-wider">Cuenta</div>
-                <a id="nav-perfil"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
                     href="perfil.html">
                     <span class="material-symbols-outlined">account_circle</span>
                     Mi perfil
                 </a>
-                <a id="nav-logout"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
-                    href="login-registro.html" onclick="cerrarSesion(); return false;">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-black/5 transition-colors"
+                    href="#" onclick="cerrarSesion()">
                     <span class="material-symbols-outlined">logout</span>
                     Cerrar sesión
                 </a>
@@ -68,7 +61,7 @@
             <div class="p-4 border-t border-border">
                 <button
                     class="w-full flex items-center justify-center gap-2 py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity"
-                    onclick="window.location.href='biblioteca.html'">
+                    onclick="location.href='biblioteca.html'">
                     <span class="material-symbols-outlined text-sm">add</span>
                     Crear playlist
                 </button>
@@ -76,8 +69,8 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 flex flex-col min-w-0 bg-bg overflow-y-auto no-scrollbar">
-            <!-- Top Navigation Bar -->
+        <main class="flex-1 flex flex-col min-w-0 bg-bg overflow-y-auto no-scrollbar pb-28">
+            <!-- Header (original) -->
             <header
                 class="sticky top-0 z-10 bg-bg/80 backdrop-blur-md px-8 py-4 flex items-center justify-between border-b border-border">
                 <div class="flex items-center gap-4 flex-1">
@@ -96,9 +89,9 @@
                         <span
                             class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-xl">search</span>
                         <input
-                            class="w-full pl-11 pr-4 py-2.5 bg-surface border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-sm text-text placeholder-text-muted"
+                            class="w-full pl-11 pr-4 py-2.5 bg-surface border-none rounded-xl focus:ring-2 focus:ring-primary/50 text-sm text-text placeholder-text-muted outline-none"
                             placeholder="Buscar artistas, canciones o podcasts" type="text"
-                            onkeydown="if(event.key==='Enter') window.location.href='buscar.html?q='+this.value" />
+                            onkeydown="if(event.key==='Enter') location.href='buscar.html?q='+encodeURIComponent(this.value)" />
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
@@ -124,216 +117,157 @@
                 </div>
             </header>
 
-            <!-- Dashboard Content -->
+            <!-- Dashboard -->
             <div class="p-8">
+                <!-- Bienvenida -->
                 <section class="mb-10">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-black tracking-tight">¡Bienvenido de nuevo!</h2>
-                        <a class="text-primary text-sm font-bold hover:underline" href="#li">Ver todo</a>
+                        <a class="text-primary text-sm font-bold hover:underline" href="buscar.html">Ver todo</a>
                     </div>
-
+                    <!-- Card admin (solo admins) -->
+                    <div id="admin-card"
+                        class="hidden p-4 bg-primary/5 border border-primary/20 rounded-2xl flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="size-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary"
+                                    style="font-variation-settings:'FILL' 1">admin_panel_settings</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm">Panel Admin</p>
+                                <p class="text-xs text-text-muted" id="admin-card-stats">—</p>
+                            </div>
+                        </div>
+                        <a href="perfil.html"
+                            class="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90 shadow-md shadow-primary/20 shrink-0">
+                            <span class="material-symbols-outlined text-sm">tune</span>Gestionar
+                        </a>
+                    </div>
                 </section>
 
-                <section>
+                <!-- Canciones (dinámico) -->
+                <section class="mb-10">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-xl font-bold">Reproducido recientemente</h2>
-                        <div class="flex gap-4">
-                            <button class="text-sm font-bold text-primary">Canciones</button>
-                            <button class="text-sm font-bold text-text-muted">Álbumes</button>
-                            <button class="text-sm font-bold text-text-muted">Playlists</button>
+                        <h2 class="text-xl font-bold">Canciones</h2>
+                    </div>
+                    <div id="canciones-lista" class="space-y-2">
+                        <div class="text-center py-12 text-text-muted">
+                            <span class="material-symbols-outlined text-5xl block mb-3 opacity-30">music_off</span>
+                            <p class="text-sm font-medium">No hay canciones aún</p>
+                            <p class="text-xs mt-1 opacity-70">El administrador puede agregar canciones desde su perfil
+                            </p>
                         </div>
                     </div>
-                    <div class="space-y-2">
-                        <div
-                            class="flex items-center p-3 rounded-xl hover:bg-surface transition-colors group cursor-pointer">
-                            <div class="w-8 text-center text-text-muted font-medium group-hover:hidden">01</div>
-                            <div class="w-8 text-center text-primary hidden group-hover:block"><span
-                                    class="material-symbols-outlined text-base">play_arrow</span></div>
-                            <img alt="Art" class="size-12 rounded-lg object-cover ml-2"
-                                src="https://i.scdn.co/image/ab67616d0000b273709825b6fdd738afbd11dafd" />
-                            <div class="ml-4 flex-1">
-                                <p class="font-bold text-sm">EMHDM</p>
-                                <p class="text-xs text-text-muted">Blessed</p>
-                            </div>
-                            <div class="flex-1 hidden md:block text-sm text-text-muted">EMHDM</div>
-                            <div class="flex-1 hidden lg:block text-sm text-text-muted">Ayer</div>
-                            <div class="flex items-center gap-6">
-                                <span
-                                    class="material-symbols-outlined text-text-muted text-xl opacity-0 group-hover:opacity-100 transition-opacity">favorite</span>
-                                <span class="text-xs text-text-muted font-medium">3:45</span>
-                                <span class="material-symbols-outlined text-text-muted">more_horiz</span>
-                            </div>
-                        </div>
-                        <div
-                            class="flex items-center p-3 rounded-xl hover:bg-surface transition-colors group cursor-pointer bg-primary/5 border border-primary/10">
-                            <div class="w-8 text-center text-primary"><span
-                                    class="material-symbols-outlined text-base">equalizer</span></div>
-                            <img alt="Art" class="size-12 rounded-lg object-cover ml-2"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYdnW-rQ1EUPV35u64oaWJtIp6tlr1m2a023HydnnR4OlOo5II-f-qPFemQcxgTQGFM1A2Sb74yTYIR0wRo03mD9rgbR6DSoRRbMAlNxdE16uRztV5HTKRxwUVaehRxzsQzvqxzS1SNXxFT6p7lAeYRP5mpWBOeoblcPKGG4Lz72joc-Sn_tc4a1Y29L3ViBTWMon57uN8rmQdh6lhKxj0W7XExu32oNRwUBNLgnfWnw_BpFc491AaDn0REzcsqYvg6RZCCtw" />
-                            <div class="ml-4 flex-1">
-                                <p class="font-bold text-sm text-primary">Electric Pulse</p>
-                                <p class="text-xs text-text-muted">The Synths</p>
-                            </div>
-                            <div class="flex-1 hidden md:block text-sm text-text-muted">Retro Future</div>
-                            <div class="flex-1 hidden lg:block text-sm text-text-muted">Hace 2 horas</div>
-                            <div class="flex items-center gap-6">
-                                <span class="material-symbols-outlined text-primary text-xl"
-                                    style="font-variation-settings: 'FILL' 1">favorite</span>
-                                <span class="text-xs text-text-muted font-medium">4:12</span>
-                                <span class="material-symbols-outlined text-text-muted">more_horiz</span>
-                            </div>
-                        </div>
-                        <div
-                            class="flex items-center p-3 rounded-xl hover:bg-surface transition-colors group cursor-pointer">
-                            <div class="w-8 text-center text-text-muted font-medium group-hover:hidden">03</div>
-                            <div class="w-8 text-center text-primary hidden group-hover:block"><span
-                                    class="material-symbols-outlined text-base">play_arrow</span></div>
-                            <img alt="Art" class="size-12 rounded-lg object-cover ml-2"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv91B1EPEbfgyAJhDVx-HIH1H576sdxs-znbQsbHHo6X5Lt37dZjMqJU-9ypjWTGFLjTovBNxCJ-gp7QLOihTzjITBZZKbS_THE0JfjowC4MbbPBQVqp4pX6Uz2xfGIxSRHK8WXwS2NxrYmiIgzF-STKpVUa4C0A2iP3zpHwGvo1TuZ4eJcZ1E50IOc67HrZJZ21vxYexVhCyu4w9pZOZkw6Op6EwHwZX5eERk_-8GYFqT5r_PW8xpwWF_hGoJUmQpV0S1Yng" />
-                            <div class="ml-4 flex-1">
-                                <p class="font-bold text-sm">Quiet Echoes</p>
-                                <p class="text-xs text-text-muted">Lana Volkov</p>
-                            </div>
-                            <div class="flex-1 hidden md:block text-sm text-text-muted">Acoustic Sessions</div>
-                            <div class="flex-1 hidden lg:block text-sm text-text-muted">Hoy</div>
-                            <div class="flex items-center gap-6">
-                                <span
-                                    class="material-symbols-outlined text-text-muted text-xl opacity-0 group-hover:opacity-100 transition-opacity">favorite</span>
-                                <span class="text-xs text-text-muted font-medium">2:58</span>
-                                <span class="material-symbols-outlined text-text-muted">more_horiz</span>
-                            </div>
-                        </div>
-                        
-                        <div
-                            class="flex items-center p-3 rounded-xl hover:bg-surface transition-colors group cursor-pointer">
-                            <div class="w-8 text-center text-text-muted font-medium group-hover:hidden">04</div>
-                            <div class="w-8 text-center text-primary hidden group-hover:block"><span
-                                    class="material-symbols-outlined text-base">play_arrow</span></div>
-                            <img alt="Art" class="size-12 rounded-lg object-cover ml-2"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2DeWzouwTvomvUYfg0V21fl-8SKOg8DuT7Ub5oLG9iBTcJb-iBhUm1UHTQw9hLkmfAlFfBS-ThP2E1cQjYxdfEFc6RWDncLe3_cU-uWTGb7i9-ivMvfEvUtwMq5gFhS7up8Bg86Xamiamnv8O6PQ7gtYEKy_Khs1dNY2noa2lYqRDO164G4kz-bX2qxm2PgUJI-MpWtLTSVH_TB7iGKZR2-4jb_9Zz9IHMl6gWPDHjGreoX_ESPDuheUbMMZT7A0Y6SHPfgg" />
-                            <div class="ml-4 flex-1">
-                                <p class="font-bold text-sm">Summer Rain</p>
-                                <p class="text-xs text-text-muted">Ocean Breeze</p>
-                            </div>
-                            <div class="flex-1 hidden md:block text-sm text-text-muted">Seasonal Moods</div>
-                            <div class="flex-1 hidden lg:block text-sm text-text-muted">Ayer</div>
-                            <div class="flex items-center gap-6">
-                                <span
-                                    class="material-symbols-outlined text-text-muted text-xl opacity-0 group-hover:opacity-100 transition-opacity">favorite</span>
-                                <span class="text-xs text-text-muted font-medium">5:21</span>
-                                <span class="material-symbols-outlined text-text-muted">more_horiz</span>
-                            </div>
+                </section>
+
+                <!-- Álbumes (dinámico) -->
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold">Álbumes</h2>
+                    </div>
+                    <div id="albums-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                        <div class="col-span-full text-center py-10 text-text-muted">
+                            <span class="material-symbols-outlined text-4xl block mb-2 opacity-30">album</span>
+                            <p class="text-sm">No hay álbumes aún</p>
                         </div>
                     </div>
                 </section>
             </div>
         </main>
 
-        <!-- Right Panel: Now Playing -->
-        <aside class="w-80 bg-bg border-l border-border flex flex-col shrink-0 overflow-y-auto no-scrollbar">
+        <!-- Panel "Reproduciendo ahora" (original layout) -->
+        <aside class="w-80 bg-bg border-l border-border flex flex-col shrink-0 overflow-y-auto no-scrollbar pb-28">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-lg font-bold">Reproduciendo ahora</h2>
-                    <button class="p-1 hover:bg-surface rounded-md"><span
-                            class="material-symbols-outlined text-xl">close</span></button>
                 </div>
-                <div class="relative group aspect-square rounded-2xl overflow-hidden mb-6 shadow-2xl">
-                    <img alt="Cover" class="w-full h-full object-cover"
-                        src="https://i.scdn.co/image/ab67616d0000b273709825b6fdd738afbd11dafd" />
-                    <div
-                        class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <button
-                            class="size-14 bg-white/20 backdrop-blur-md rounded-full text-white flex items-center justify-center">
-                            <span class="material-symbols-outlined text-3xl">fullscreen</span>
-                        </button>
-                    </div>
+                <!-- Cover actual -->
+                <div id="now-cover-wrap"
+                    class="relative aspect-square rounded-2xl overflow-hidden mb-6 shadow-2xl bg-surface border border-border flex items-center justify-center">
+                    <span class="material-symbols-outlined text-text-muted text-5xl opacity-30">music_note</span>
                 </div>
-                <div class="flex items-start justify-between mb-8">
-                    <div>
-                        <h3 class="text-xl font-black">EMHDM</h3>
-                        <p class="text-text-muted font-medium">The Synths</p>
+                <div class="flex items-start justify-between mb-4">
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-xl font-black truncate" id="now-title">Sin reproducir</h3>
+                        <p class="text-text-muted font-medium truncate" id="now-artist">—</p>
                     </div>
-                    <button class="text-primary"><span class="material-symbols-outlined"
-                            style="font-variation-settings: 'FILL' 1">favorite</span></button>
+                    <button onclick="Player.toggleLike()"
+                        class="text-text-muted hover:text-primary transition-colors ml-3 shrink-0">
+                        <span class="material-symbols-outlined text-2xl" id="player-like-icon">favorite_border</span>
+                    </button>
                 </div>
-                <div class="space-y-6">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm font-bold">Siguiente en cola</p>
-                        <button class="text-xs font-bold text-primary">Ver cola</button>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <img alt="Queue" class="size-10 rounded-lg object-cover"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP4UiAUP-OTw4CX-6LT3y0LwNwu4Ptum6hKQEv9Fi4YmUcBijuNGsGND5JCV4ccIYwQbCBcJxu6NR7J_fqPyM4whIduP9wvqWjus7MVgT4-EBG64wlCuepVpCtb8ZKiu_7nBgHjP9DsviJIGs9pwoSMEOD-7Gwkw4aLs6CWgfse-2CDy8dV_Yye2y4JFQC1KpAr_8mCYqSFfrp77Pm1eZhg8x94oovZdy2CGB4ZlK9N4AQQy99l1P9WOqim0agu5-xrUGAu9Y" />
-                            <div class="flex-1">
-                                <p class="text-sm font-bold">Urban Jungle</p>
-                                <p class="text-xs text-text-muted">Metro Beats</p>
-                            </div>
-                            <span class="material-symbols-outlined text-text-muted text-sm">drag_handle</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <img alt="Queue" class="size-10 rounded-lg object-cover"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg-FEJ_idl5r0eqHUjsP1Z5_-9XN9nDGJ7dUvQ5J5OlldgQyXEuTLjY3_h1ICtE4p4wXRwZBaK5nWXlil5BNYtwlnVvlNgx_QtJaazuaeIYajedYt1w3YMmVz4l9-MqE3Bx1S9LKA9-uzpowoKJGe2NBHzmqJWw-X47Dy8V3MWoDSH8h97wKJ32nfqi8Kfq9iP27CPSt3zRPmX76CjtZaeDQifDou_BaMe8UGqkga0V5wtXEVSC2GkFCnD40I6V2QZtxr7H7A" />
-                            <div class="flex-1">
-                                <p class="text-sm font-bold">Sunset Drive</p>
-                                <p class="text-xs text-text-muted">Aura</p>
-                            </div>
-                            <span class="material-symbols-outlined text-text-muted text-sm">drag_handle</span>
-                        </div>
-                    </div>
+                <!-- Controles -->
+                <div class="flex items-center justify-center gap-6 mb-5">
+                    <button onclick="Player.anterior()" class="text-text-muted hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl">skip_previous</span>
+                    </button>
+                    <button onclick="Player.togglePlay()"
+                        class="size-12 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-primary/30">
+                        <span class="material-symbols-outlined text-2xl" id="now-play-icon">play_arrow</span>
+                    </button>
+                    <button onclick="Player.siguiente()" class="text-text-muted hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl">skip_next</span>
+                    </button>
                 </div>
-                <div class="mt-8 p-4 bg-surface rounded-2xl border border-border">
-                    <div class="flex items-center gap-3 mb-3">
-                        <img alt="Friend" class="size-8 rounded-full"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2NY21NRamYbx-ZF4XtgTLonxtOT0JGppVSY1vQk12ALetNBBIdsDZKnfFFmcP-5aGuBeCZG-38D2jMva1CrQCKJ3TQQuEM4FsMejtKwo0CmzoW4m4FIdLRHnVDP_6oVlDukhQLBRJSrdAnKson2arZ2U8ijNUL1KtDKMF2AdAu1-CSWKUCEuoYlOH1K4X3tIxG5tJEBWocji0sPh6i3UD89AO46OUZxE6o-VFaiwOSkNTAc0cCFsKELnBwAoethhfyTnLiI0" />
-                        <p class="text-xs font-bold">Amigos escuchando</p>
-                    </div>
-                    <p class="text-xs text-text-muted">2 amigos están escuchando a <span class="text-text font-bold">The
-                            Synths</span> ahora mismo.</p>
+                <!-- YouTube embed -->
+                <div id="yt-panel" class="hidden rounded-xl overflow-hidden border border-border mb-3"
+                    style="aspect-ratio:16/9">
+                    <div id="yt-container" class="w-full h-full bg-black"></div>
+                </div>
+                <button onclick="toggleYT()"
+                    class="w-full py-1.5 text-xs font-bold text-text-muted hover:text-primary transition-colors flex items-center justify-center gap-1">
+                    <span class="material-symbols-outlined text-sm">smart_display</span>
+                    <span id="yt-toggle-label">Mostrar video</span>
+                </button>
+                <!-- Cola siguiente -->
+                <div class="mt-6 space-y-2" id="cola-siguiente">
+                    <p class="text-sm font-bold mb-3">Siguiente en cola</p>
                 </div>
             </div>
         </aside>
     </div>
 
-    <!-- Persistent Music Player Bar -->
+    <!-- Player bar (diseño original) -->
     <footer class="fixed bottom-0 left-0 right-0 h-24 bg-surface border-t border-border flex items-center px-6 z-20">
         <div class="flex items-center gap-4 w-1/4">
-            <img alt="Current" class="size-14 rounded-lg shadow-md"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGH2LtKdcL5zuxJcDotbPmDQ6fhRl3CVhRMaKMQ2cOo4jcmvvClNhEDYo0foDOWmsv_-5MHUlXheQX22l91PuJrV6Xdf129dBnnrjOqm-LMIbLlLcIl1MFyhB-QQVmP0rvKirjqzZZAPQxKr--sBHP3hH44wcbHg8FF86EriG7rXVc-RyKyLc_GFqWR3CJSts2hZL1XX5VYCjNXVcka8YRtgFsb7MFVDKrDY6V6eyYJFwe3RQPKnoaFN5OEDPdQtGTDoxwKgY" />
+            <div id="player-cover-wrap"
+                class="size-14 rounded-lg shadow-md bg-border overflow-hidden shrink-0 flex items-center justify-center">
+                <span class="material-symbols-outlined text-text-muted">music_note</span>
+            </div>
             <div class="overflow-hidden">
-                <p class="text-sm font-bold truncate">Electric Pulse</p>
-                <p class="text-xs text-text-muted truncate">The Synths</p>
+                <p class="text-sm font-bold truncate" id="player-title">Sin reproducir</p>
+                <p class="text-xs text-text-muted truncate" id="player-artist">—</p>
             </div>
-            <div class="flex gap-2 ml-2">
-                <button class="text-primary"><span class="material-symbols-outlined text-lg"
-                        style="font-variation-settings: 'FILL' 1">favorite</span></button>
-            </div>
+            <button onclick="Player.toggleLike()"
+                class="text-text-muted hover:text-primary transition-colors ml-2 shrink-0">
+                <span class="material-symbols-outlined text-lg" id="player-bar-like">favorite_border</span>
+            </button>
         </div>
         <div class="flex-1 flex flex-col items-center max-w-2xl px-8">
             <div class="flex items-center gap-6 mb-2">
-                <button class="text-text hover:text-primary transition-colors"><span
-                        class="material-symbols-outlined text-3xl">skip_previous</span></button>
-                <button
-                    class="size-11 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
-                    <span class="material-symbols-outlined text-3xl">pause</span>
+                <button onclick="Player.anterior()" class="text-text hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-3xl">skip_previous</span>
                 </button>
-                <button class="text-text hover:text-primary transition-colors"><span
-                        class="material-symbols-outlined text-3xl">skip_next</span></button>
+                <button onclick="Player.togglePlay()"
+                    class="size-11 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined text-3xl" id="player-play-icon">play_arrow</span>
+                </button>
+                <button onclick="Player.siguiente()" class="text-text hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined text-3xl">skip_next</span>
+                </button>
             </div>
             <div class="w-full flex items-center gap-3">
-                <span class="text-[10px] font-bold text-text-muted w-8 text-right">2:15</span>
+                <span class="text-[10px] font-bold text-text-muted w-8 text-right">0:00</span>
                 <div class="flex-1 h-1 bg-border rounded-full relative group cursor-pointer">
-                    <div class="absolute top-0 left-0 h-full w-[60%] bg-primary rounded-full"></div>
-                    <div
-                        class="absolute top-1/2 left-[60%] -translate-y-1/2 size-3 bg-primary border-2 border-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    </div>
+                    <div class="absolute top-0 left-0 h-full w-0 bg-primary rounded-full" id="player-progress"></div>
                 </div>
-                <span class="text-[10px] font-bold text-text-muted w-8">4:12</span>
+                <span class="text-[10px] font-bold text-text-muted w-8" id="player-duration">—</span>
             </div>
         </div>
         <div class="w-1/4 flex items-center justify-end gap-4">
-            <button class="text-text-muted hover:text-primary transition-colors"><span
-                    class="material-symbols-outlined">queue_music</span></button>
+            <button class="text-text-muted hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">queue_music</span>
+            </button>
             <div class="flex items-center gap-2 w-32">
                 <span class="material-symbols-outlined text-text-muted text-xl">volume_up</span>
                 <div class="flex-1 h-1 bg-border rounded-full relative">
@@ -343,10 +277,11 @@
         </div>
     </footer>
 
-    <!-- Cargar el tema y la configuración de Tailwind -->
     <script src="js/tailwind-config.js"></script>
-    <!-- Para manejar el cambio de tema -->
+    <script src="js/bd.js"></script>
     <script src="js/tema.js"></script>
+    <script src="js/inicio.js"></script>
+
 </body>
 
 </html>
