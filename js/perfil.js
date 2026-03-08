@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`;
         } else {
             elPl.innerHTML = playlists.slice(0, 5).map(p => `
-        <div class="group flex items-center justify-between p-3 rounded-lg hover:bg-surface cursor-pointer transition-colors border-b border-border/50 last:border-0">
+        <div class="group flex items-center justify-between p-3 rounded-lg hover:bg-surface cursor-pointer transition-colors border-b border-border/50 last:border-0" onclick="verDetallePlaylist('${p.id}')">
           <div class="flex items-center gap-4">
             <div class="relative size-12 rounded-lg bg-surface overflow-hidden border border-border flex items-center justify-center">
               ${p.portada ? `<img src="${p.portada}" class="w-full h-full object-cover">` : '<span class="material-symbols-outlined text-text-muted text-base">queue_music</span>'}
@@ -49,9 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="text-text-muted text-xs">${p.canciones.length} canción${p.canciones.length !== 1 ? 'es' : ''}</p>
             </div>
           </div>
-          <a href="biblioteca.html" class="text-text-muted hover:text-primary">
-            <span class="material-symbols-outlined">more_horiz</span>
-          </a>
+          <span class="text-text-muted group-hover:text-primary transition-colors material-symbols-outlined">chevron_right</span>
         </div>`).join('');
         }
     }
@@ -103,6 +101,257 @@ function prevImg(inputId, prevId) {
         : `<span class="material-symbols-outlined text-text-muted text-3xl">image</span>`;
 }
 
+// ============================================
+// FUNCIONES PARA ÁLBUMES - VER Y AGREGAR CANCIONES
+// ============================================
+
+let albumActualId = null;
+
+function verDetalleAlbum(albumId) {
+    albumActualId = albumId;
+    const album = DB.getAlbums().find(a => a.id === albumId);
+    if (!album) return;
+    
+    // Mostrar información del álbum
+    document.getElementById('album-detalle-titulo').textContent = album.titulo;
+    document.getElementById('album-detalle-nombre').textContent = album.titulo;
+    document.getElementById('album-detalle-artista').textContent = album.artista;
+    document.getElementById('album-detalle-info').textContent = `${album.artista} · ${album.genero || 'Sin género'} · ${album.año || 'Sin año'}`;
+    
+    // Portada
+    const portadaEl = document.getElementById('album-detalle-portada');
+    if (album.portada) {
+        portadaEl.innerHTML = `<img src="${album.portada}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-text-muted text-4xl\\'>album</span>'">`;
+    } else {
+        portadaEl.innerHTML = '<span class="material-symbols-outlined text-text-muted text-4xl">album</span>';
+    }
+    
+    // Cargar canciones del álbum
+    cargarCancionesAlbum(albumId);
+    
+    // Mostrar modal
+    document.getElementById('modal-album-detalle').style.display = 'flex';
+}
+
+function cargarCancionesAlbum(albumId) {
+    const canciones = DB.getCanciones().filter(c => c.albumId === albumId);
+    const totalEl = document.getElementById('album-detalle-total');
+    totalEl.textContent = `${canciones.length} canción${canciones.length !== 1 ? 'es' : ''}`;
+    
+    const listaEl = document.getElementById('album-canciones-lista');
+    
+    if (!canciones.length) {
+        listaEl.innerHTML = `
+            <div class="text-center py-8 text-text-muted">
+                <span class="material-symbols-outlined text-4xl block mb-2 opacity-30">music_off</span>
+                <p class="text-sm">Este álbum no tiene canciones</p>
+                <p class="text-xs mt-1">Agrega canciones usando el botón "Agregar canción"</p>
+            </div>
+        `;
+        return;
+    }
+    
+    listaEl.innerHTML = canciones.map(c => `
+        <div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface border border-transparent hover:border-border transition-all">
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+                <div class="size-10 rounded-lg bg-surface overflow-hidden shrink-0 flex items-center justify-center">
+                    ${c.portada ? `<img src="${c.portada}" class="w-full h-full object-cover">` : '<span class="material-symbols-outlined text-text-muted text-sm">music_note</span>'}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm truncate">${c.titulo}</p>
+                    <p class="text-xs text-text-muted truncate">${c.artista} · ${c.duracion || '—'}</p>
+                </div>
+            </div>
+            <div class="flex gap-1 shrink-0">
+                <button onclick="quitarCancionDeAlbum('${c.id}')" class="size-8 flex items-center justify-center rounded-lg hover:bg-red-50 text-text-muted hover:text-red-500 transition-colors" title="Quitar del álbum">
+                    <span class="material-symbols-outlined text-base">remove_circle</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function quitarCancionDeAlbum(cancionId) {
+    if (!confirm('¿Quitar esta canción del álbum?')) return;
+    
+    // Actualizar la canción para que no tenga álbum
+    DB.editarCancion(cancionId, { albumId: null });
+    
+    // Recargar la lista
+    if (albumActualId) cargarCancionesAlbum(albumActualId);
+    toast('Canción removida del álbum');
+}
+
+function abrirAgregarCancionAAlbum() {
+    if (!albumActualId) return;
+    
+    document.getElementById('agregar-cancion-album-id').value = albumActualId;
+    
+    // Llenar select con canciones que no tienen álbum
+    const canciones = DB.getCanciones().filter(c => !c.albumId || c.albumId === '');
+    const select = document.getElementById('select-cancion-album');
+    
+    if (!canciones.length) {
+        select.innerHTML = '<option value="">No hay canciones disponibles</option>';
+    } else {
+        select.innerHTML = '<option value="">-- Selecciona una canción --</option>' + 
+            canciones.map(c => `<option value="${c.id}">${c.titulo} — ${c.artista}</option>`).join('');
+    }
+    
+    document.getElementById('modal-agregar-cancion-album').style.display = 'flex';
+}
+
+function agregarCancionAAlbum() {
+    const albumId = document.getElementById('agregar-cancion-album-id').value;
+    const cancionId = document.getElementById('select-cancion-album').value;
+    
+    if (!cancionId) {
+        toast('Selecciona una canción', 'error');
+        return;
+    }
+    
+    DB.editarCancion(cancionId, { albumId: albumId });
+    cerrarAgregarCancionAAlbum();
+    cargarCancionesAlbum(albumId);
+    toast('Canción agregada al álbum');
+}
+
+function cerrarAgregarCancionAAlbum() {
+    document.getElementById('modal-agregar-cancion-album').style.display = 'none';
+}
+
+function cerrarModalAlbumDetalle() {
+    document.getElementById('modal-album-detalle').style.display = 'none';
+    albumActualId = null;
+}
+
+// ============================================
+// FUNCIONES PARA PLAYLISTS - VER Y AGREGAR CANCIONES
+// ============================================
+
+let playlistActualId = null;
+
+function verDetallePlaylist(playlistId) {
+    playlistActualId = playlistId;
+    const u = DB.getUsuarioActual();
+    const playlist = DB.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistId);
+    if (!playlist) return;
+    
+    document.getElementById('playlist-detalle-titulo').textContent = playlist.nombre;
+    document.getElementById('playlist-detalle-nombre').textContent = playlist.nombre;
+    document.getElementById('playlist-detalle-creador').textContent = `Creada por ${u.nombre}`;
+    document.getElementById('playlist-detalle-desc').textContent = playlist.descripcion || 'Sin descripción';
+    
+    // Portada
+    const portadaEl = document.getElementById('playlist-detalle-portada');
+    if (playlist.portada) {
+        portadaEl.innerHTML = `<img src="${playlist.portada}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span class=\\'material-symbols-outlined text-text-muted text-4xl\\'>queue_music</span>'">`;
+    } else {
+        portadaEl.innerHTML = '<span class="material-symbols-outlined text-text-muted text-4xl">queue_music</span>';
+    }
+    
+    // Cargar canciones de la playlist
+    cargarCancionesPlaylist(playlistId);
+    
+    document.getElementById('modal-playlist-detalle').style.display = 'flex';
+}
+
+function cargarCancionesPlaylist(playlistId) {
+    const u = DB.getUsuarioActual();
+    const playlist = DB.getPlaylistsDeUsuario(u.id).find(p => p.id === playlistId);
+    if (!playlist) return;
+    
+    const cancionesIds = playlist.canciones || [];
+    const todasCanciones = DB.getCanciones();
+    const canciones = todasCanciones.filter(c => cancionesIds.includes(c.id));
+    
+    const totalEl = document.getElementById('playlist-detalle-total');
+    totalEl.textContent = `${canciones.length} canción${canciones.length !== 1 ? 'es' : ''}`;
+    
+    const listaEl = document.getElementById('playlist-canciones-lista');
+    
+    if (!canciones.length) {
+        listaEl.innerHTML = `
+            <div class="text-center py-8 text-text-muted">
+                <span class="material-symbols-outlined text-4xl block mb-2 opacity-30">music_off</span>
+                <p class="text-sm">Esta playlist no tiene canciones</p>
+                <p class="text-xs mt-1">Agrega canciones usando el botón "Agregar canción"</p>
+            </div>
+        `;
+        return;
+    }
+    
+    listaEl.innerHTML = canciones.map(c => `
+        <div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface border border-transparent hover:border-border transition-all">
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+                <div class="size-10 rounded-lg bg-surface overflow-hidden shrink-0 flex items-center justify-center">
+                    ${c.portada ? `<img src="${c.portada}" class="w-full h-full object-cover">` : '<span class="material-symbols-outlined text-text-muted text-sm">music_note</span>'}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-sm truncate">${c.titulo}</p>
+                    <p class="text-xs text-text-muted truncate">${c.artista} · ${c.duracion || '—'}</p>
+                </div>
+            </div>
+            <div class="flex gap-1 shrink-0">
+                <button onclick="quitarCancionDePlaylist('${c.id}')" class="size-8 flex items-center justify-center rounded-lg hover:bg-red-50 text-text-muted hover:text-red-500 transition-colors" title="Quitar de la playlist">
+                    <span class="material-symbols-outlined text-base">remove_circle</span>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function quitarCancionDePlaylist(cancionId) {
+    if (!playlistActualId || !confirm('¿Quitar esta canción de la playlist?')) return;
+    
+    DB.quitarCancionDePlaylist(playlistActualId, cancionId);
+    cargarCancionesPlaylist(playlistActualId);
+    toast('Canción removida de la playlist');
+}
+
+function abrirAgregarCancionAPlaylist() {
+    if (!playlistActualId) return;
+    
+    document.getElementById('agregar-cancion-playlist-id').value = playlistActualId;
+    
+    // Llenar select con todas las canciones
+    const canciones = DB.getCanciones();
+    const select = document.getElementById('select-cancion-playlist');
+    
+    if (!canciones.length) {
+        select.innerHTML = '<option value="">No hay canciones disponibles</option>';
+    } else {
+        select.innerHTML = '<option value="">-- Selecciona una canción --</option>' + 
+            canciones.map(c => `<option value="${c.id}">${c.titulo} — ${c.artista}</option>`).join('');
+    }
+    
+    document.getElementById('modal-agregar-cancion-playlist').style.display = 'flex';
+}
+
+function agregarCancionAPlaylist() {
+    const playlistId = document.getElementById('agregar-cancion-playlist-id').value;
+    const cancionId = document.getElementById('select-cancion-playlist').value;
+    
+    if (!cancionId) {
+        toast('Selecciona una canción', 'error');
+        return;
+    }
+    
+    DB.agregarCancionAPlaylist(playlistId, cancionId);
+    cerrarAgregarCancionAPlaylist();
+    cargarCancionesPlaylist(playlistId);
+    toast('Canción agregada a la playlist');
+}
+
+function cerrarAgregarCancionAPlaylist() {
+    document.getElementById('modal-agregar-cancion-playlist').style.display = 'none';
+}
+
+function cerrarModalPlaylistDetalle() {
+    document.getElementById('modal-playlist-detalle').style.display = 'none';
+    playlistActualId = null;
+}
+
 // ---- CANCIONES ----
 function renderC() {
     const canciones = DB.getCanciones();
@@ -143,13 +392,14 @@ function renderC() {
     }).join('');
 }
 
-function abrirFormC(id) {
+function abrirFormC(id, paraAlbum = false) {
     const form = document.getElementById('form-c');
     form.classList.remove('hidden');
     form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     const albums = DB.getAlbums();
     document.getElementById('c-album').innerHTML = '<option value="">Sin álbum</option>' +
         albums.map(a => `<option value="${a.id}">${a.titulo} — ${a.artista}</option>`).join('');
+    
     if (id) {
         const c = DB.getCanciones().find(x => x.id === id);
         if (!c) return;
@@ -167,7 +417,14 @@ function abrirFormC(id) {
         document.getElementById('c-id').value = '';
         ['c-titulo', 'c-artista', 'c-duracion', 'c-portada', 'c-audio'].forEach(i => { const e = document.getElementById(i); if (e) e.value = ''; });
         document.getElementById('c-genero').value = '';
-        document.getElementById('c-album').value = '';
+        
+        // Si viene desde el modal de álbum, preseleccionar el álbum actual
+        if (paraAlbum && albumActualId) {
+            document.getElementById('c-album').value = albumActualId;
+        } else {
+            document.getElementById('c-album').value = '';
+        }
+        
         document.getElementById('prev-c-portada').innerHTML = '<span class="material-symbols-outlined text-text-muted text-3xl">image</span>';
         document.getElementById('form-c-titulo').textContent = 'Nueva Canción';
     }
@@ -189,8 +446,19 @@ function guardarC() {
     if (!d.titulo) return toast('El título es obligatorio', 'error');
     if (!d.artista) return toast('El artista es obligatorio', 'error');
     if (!d.urlAudio) return toast('La URL de audio es obligatoria', 'error');
+    
     id ? DB.editarCancion(id, d) : DB.crearCancion(d);
-    cerrarFormC(); renderC(); refreshAdminStats();
+    cerrarFormC(); 
+    renderC(); 
+    refreshAdminStats();
+    
+    // Si estamos en el modal de álbum, recargar las canciones
+    if (albumActualId) {
+        cargarCancionesAlbum(albumActualId);
+        // Cerrar el modal de agregar si estaba abierto
+        cerrarAgregarCancionAAlbum();
+    }
+    
     toast(id ? 'Canción actualizada ✓' : 'Canción agregada ✓');
 }
 
@@ -215,23 +483,25 @@ function renderA() {
     }
     el.innerHTML = albums.map(a => {
         const n = canciones.filter(c => c.albumId === a.id).length;
-        return `<div class="bg-surface rounded-2xl border border-border p-3 flex items-center gap-3">
+        return `<div class="bg-surface rounded-2xl border border-border p-3 flex items-center gap-3 cursor-pointer hover:bg-primary/5 transition-colors" onclick="verDetalleAlbum('${a.id}')">
         <div class="size-14 rounded-xl bg-border overflow-hidden shrink-0 flex items-center justify-center">
         ${a.portada ? `<img src="${a.portada}" class="w-full h-full object-cover" onerror="this.style.display='none'">` : '<span class="material-symbols-outlined text-text-muted text-2xl">album</span>'}
         </div>
         <div class="flex-1 min-w-0">
-        <p class="font-bold text-sm truncate">${a.titulo}</p>
-        <p class="text-xs text-text-muted">${a.artista}${a.año ? ' · ' + a.año : ''}</p>
-        ${a.genero ? `<span class="inline-block px-1.5 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded-full mt-0.5">${a.genero}</span>` : ''}
-        <p class="text-[10px] text-text-muted mt-0.5">${n} canción${n !== 1 ? 'es' : ''}</p>
+            <div class="flex items-center justify-between">
+                <p class="font-bold text-sm truncate">${a.titulo}</p>
+                <span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">${n} canciones</span>
+            </div>
+            <p class="text-xs text-text-muted">${a.artista}${a.año ? ' · ' + a.año : ''}</p>
+            ${a.genero ? `<span class="inline-block px-1.5 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded-full mt-0.5">${a.genero}</span>` : ''}
         </div>
-        <div class="flex flex-col gap-1 shrink-0">
-        <button onclick="editarA('${a.id}')" class="size-7 flex items-center justify-center rounded-lg hover:bg-primary/10 text-text-muted hover:text-primary transition-colors">
-            <span class="material-symbols-outlined text-sm">edit</span>
-        </button>
-        <button onclick="eliminarA('${a.id}')" class="size-7 flex items-center justify-center rounded-lg hover:bg-red-50 text-text-muted hover:text-red-500 transition-colors">
-            <span class="material-symbols-outlined text-sm">delete</span>
-        </button>
+        <div class="flex flex-col gap-1 shrink-0" onclick="event.stopPropagation()">
+            <button onclick="editarA('${a.id}')" class="size-7 flex items-center justify-center rounded-lg hover:bg-primary/10 text-text-muted hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-sm">edit</span>
+            </button>
+            <button onclick="eliminarA('${a.id}')" class="size-7 flex items-center justify-center rounded-lg hover:bg-red-50 text-text-muted hover:text-red-500 transition-colors">
+                <span class="material-symbols-outlined text-sm">delete</span>
+            </button>
         </div>
     </div>`;
     }).join('');

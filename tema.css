@@ -217,3 +217,101 @@ body {
 .dark .bg-white\/20 {
     background-color: rgba(42, 31, 61, 0.2) !important;
 }
+
+/* Inputs en modo oscuro */
+.dark .input-sp,
+.dark input,
+.dark select,
+.dark textarea {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text) !important;
+}
+
+.dark .input-sp:focus,
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent) !important;
+}
+
+/* Placeholders en modo oscuro */
+.dark .input-sp::placeholder,
+.dark input::placeholder,
+.dark select::placeholder,
+.dark textarea::placeholder {
+    color: var(--color-muted) !important;
+    opacity: 0.7;
+}
+
+/* Estilos específicos para los selects */
+.dark select option {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+/* Para los modales específicamente */
+.dark .bg-bg,
+.dark .bg-surface,
+.dark .bg-white {
+    background-color: var(--color-surface) !important;
+}
+
+/* Para los textos dentro de modales */
+.dark .text-text,
+.dark .font-bold,
+.dark .font-semibold,
+.dark .font-medium,
+.dark label {
+    color: var(--color-text) !important;
+}
+
+/* Para los textos secundarios */
+.dark .text-text-muted {
+    color: var(--color-muted) !important;
+}
+
+/* Para los bordes de los inputs */
+.dark .border-border {
+    border-color: var(--color-border) !important;
+}
+
+/* Para los iconos dentro de inputs */
+.dark .material-symbols-outlined {
+    color: var(--color-muted);
+}
+
+/* Estilo específico para los inputs del modal admin */
+.dark #modal-admin input,
+.dark #modal-admin select,
+.dark #modal-admin textarea {
+    background-color: var(--color-surface) !important;
+    border-color: var(--color-border) !important;
+    color: var(--color-text) !important;
+}
+
+/* Para los labels del modal admin */
+.dark #modal-admin .label-sp {
+    color: var(--color-muted) !important;
+}
+
+/* Para el fondo del modal */
+.dark #modal-admin .bg-bg,
+.dark #modal-admin .bg-surface {
+    background-color: var(--color-bg) !important;
+}
+
+/* Para los textos del título del modal */
+.dark #modal-admin .font-black,
+.dark #modal-admin .font-bold {
+    color: var(--color-text) !important;
+}
+
+/* Para los placeholders en el modal */
+.dark #modal-admin input::placeholder,
+.dark #modal-admin select::placeholder,
+.dark #modal-admin textarea::placeholder {
+    color: var(--color-muted) !important;
+    opacity: 0.5;
+}
