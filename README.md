@@ -1,4 +1,4 @@
-# 🎵 SpotiPobre
+# 🎵 SoundStream
 
 > Aplicación web de música inspirada en Spotify, construida con HTML, CSS (Tailwind) y JavaScript puro usando `localStorage` como base de datos.
 
@@ -15,7 +15,7 @@ _(Emanuel Celis)_
 
 ## 📋 Descripción
 
-SpotiPobre es una aplicación de streaming de música de página única (SPA) que simula las funcionalidades principales de Spotify. Toda la información se almacena en el `localStorage` del navegador, sin necesidad de servidor ni base de datos externa.
+SoundStream es una aplicación de streaming de música de página única (SPA) que simula las funcionalidades principales de Spotify. Toda la información se almacena en el `localStorage` del navegador, sin necesidad de servidor ni base de datos externa.
 
 ---
 
@@ -25,7 +25,7 @@ SpotiPobre es una aplicación de streaming de música de página única (SPA) qu
 - Registro de nuevos usuarios con nombre, usuario, correo y contraseña
 - Inicio de sesión con validación
 - Cierre de sesión
-- Usuario administrador predeterminado: `admin@spotipobre.com` / `admin123`
+- Usuario administrador predeterminado: `admin@soundstream.com` / `admin123`
 
 ### 🏠 Inicio
 - Vista de canciones y álbumes disponibles en la biblioteca
@@ -65,7 +65,7 @@ SpotiPobre es una aplicación de streaming de música de página única (SPA) qu
 ## 🗂️ Estructura de Archivos
 
 ```
-spotipobre/
+soundstream/
 ├── inicio.html          # Página principal
 ├── buscar.html          # Búsqueda de contenido
 ├── biblioteca.html      # Playlists del usuario
@@ -107,7 +107,7 @@ spotipobre/
 1. Clona o descarga el repositorio
 2. Abre `login-registro.html` en tu navegador (no requiere servidor)
 3. Inicia sesión como admin:
-   - **Email:** `admin@spotipobre.com`
+   - **Email:** `admin@soundstream.com`
    - **Contraseña:** `admin123`
 4. Desde **Perfil → Gestionar**, agrega canciones con URLs de YouTube
 5. ¡Listo para reproducir!
